@@ -1,2 +1,0 @@
-# EmailHackedChecker
-Email hacked checker

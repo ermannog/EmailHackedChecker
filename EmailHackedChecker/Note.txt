@@ -1,0 +1,6 @@
+﻿Nome  Data Breaches
+Hacked Email Databases Query Tool (HEDBQT)
+
+Email Leaks Databases Query Tool (ELDBQueryTool)
+
+Email Leak Checker (ELC)

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ResultSchema" targetNamespace="http://tempuri.org/ResultSchema.xsd" xmlns:mstns="http://tempuri.org/ResultSchema.xsd" xmlns="http://tempuri.org/ResultSchema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="ResultSchema" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ResultSchema" msprop:Generator_UserDSName="ResultSchema">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="GridResult" msprop:Generator_TableClassName="GridResultDataTable" msprop:Generator_TableVarName="tableGridResult" msprop:Generator_RowChangedName="GridResultRowChanged" msprop:Generator_TablePropName="GridResult" msprop:Generator_RowDeletingName="GridResultRowDeleting" msprop:Generator_RowChangingName="GridResultRowChanging" msprop:Generator_RowEvHandlerName="GridResultRowChangeEventHandler" msprop:Generator_RowDeletedName="GridResultRowDeleted" msprop:Generator_RowClassName="GridResultRow" msprop:Generator_UserTableName="GridResult" msprop:Generator_RowEvArgName="GridResultRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Email" msprop:Generator_ColumnVarNameInTable="columnEmail" msprop:Generator_ColumnPropNameInRow="Email" msprop:Generator_ColumnPropNameInTable="EmailColumn" msprop:Generator_UserColumnName="Email" type="xs:string" />
+              <xs:element name="DataLeakFound" msprop:Generator_ColumnVarNameInTable="columnDataLeakFound" msprop:Generator_ColumnPropNameInRow="DataLeakFound" msprop:Generator_ColumnPropNameInTable="DataLeakFoundColumn" msprop:Generator_UserColumnName="DataLeakFound" type="xs:boolean" default="false" minOccurs="0" />
+              <xs:element name="HaveIBeenPwned" msprop:Generator_ColumnVarNameInTable="columnHaveIBeenPwned" msprop:Generator_ColumnPropNameInRow="HaveIBeenPwned" msprop:Generator_ColumnPropNameInTable="HaveIBeenPwnedColumn" msprop:Generator_UserColumnName="HaveIBeenPwned" type="xs:string" minOccurs="0" />
+              <xs:element name="HackedEmails" msprop:Generator_ColumnVarNameInTable="columnHackedEmails" msprop:Generator_ColumnPropNameInRow="HackedEmails" msprop:Generator_ColumnPropNameInTable="HackedEmailsColumn" msprop:Generator_UserColumnName="HackedEmails" type="xs:string" minOccurs="0" />
+              <xs:element name="LastDataLeakDate" msprop:Generator_ColumnVarNameInTable="columnLastDataLeakDate" msprop:Generator_ColumnPropNameInRow="LastDataLeakDate" msprop:Generator_ColumnPropNameInTable="LastDataLeakDateColumn" msprop:Generator_UserColumnName="LastDataLeakDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="LastDataLeakPublicationDate" msprop:Generator_ColumnVarNameInTable="columnLastDataLeakPublicationDate" msprop:Generator_ColumnPropNameInRow="LastDataLeakPublicationDate" msprop:Generator_ColumnPropNameInTable="LastDataLeakPublicationDateColumn" msprop:Generator_UserColumnName="LastDataLeakPublicationDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:GridResult" />
+      <xs:field xpath="mstns:Email" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
