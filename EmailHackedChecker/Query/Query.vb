@@ -34,8 +34,7 @@
     Public Const DatabaseRequestDelayDefaulValue As UInt64 = 2000
     Public Property DatabaseRequestDelay As UInt64 = Query.DatabaseRequestDelayDefaulValue
 
-    Public DatabaseLastRequest As New System.Collections.Generic.Dictionary(Of Util.Databases, DateTime) 'System.Collections.Generic.KeyValuePair(Of Util.Databases, DateTime)
-
+    Public DatabaseLastRequest As New System.Collections.Generic.Dictionary(Of Util.Databases, DateTime)
 
 #Region "Method Execute"
     Public Overloads Sub Execute(email As String)
