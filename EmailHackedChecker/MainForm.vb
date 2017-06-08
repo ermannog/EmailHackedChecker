@@ -24,6 +24,12 @@
 
     End Sub
 
+#Region "Menu File"
+    Private Sub mniFileExit_Click(sender As Object, e As EventArgs) Handles mniFileExit.Click
+        System.Environment.Exit(0)
+    End Sub
+#End Region
+
 #Region "Menu Actions"
     Private QueryRunnig As Boolean = False
     Private QueryException As System.Exception = Nothing
@@ -426,8 +432,6 @@
 
         If UtilLogFileWriter.LogEnabled Then UtilLogFileWriter.WriteNewEntry(logEntryType, text.TrimNewLine())
     End Sub
-
-
 #End Region
 
 End Class

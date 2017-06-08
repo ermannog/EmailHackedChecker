@@ -75,6 +75,9 @@ Partial Class MainForm
         Me.Lbl = New System.Windows.Forms.Label()
         Me.OfdEmailList = New System.Windows.Forms.OpenFileDialog()
         Me.DataGridViewImageColumn2 = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.mniFile = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tssFile1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.mniFileExit = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuMain.SuspendLayout()
         Me.TlsMain.SuspendLayout()
         Me.StsMain.SuspendLayout()
@@ -120,7 +123,7 @@ Partial Class MainForm
         'MnuMain
         '
         Me.MnuMain.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.MnuMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MniActions, Me.MniCache, Me.MniHelp})
+        Me.MnuMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mniFile, Me.MniActions, Me.MniCache, Me.MniHelp})
         Me.MnuMain.Location = New System.Drawing.Point(0, 0)
         Me.MnuMain.Name = "MnuMain"
         Me.MnuMain.Padding = New System.Windows.Forms.Padding(4, 2, 0, 2)
@@ -141,7 +144,7 @@ Partial Class MainForm
         Me.MniActionsExecute.Image = CType(resources.GetObject("MniActionsExecute.Image"), System.Drawing.Image)
         Me.MniActionsExecute.Name = "MniActionsExecute"
         Me.MniActionsExecute.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
-        Me.MniActionsExecute.Size = New System.Drawing.Size(188, 22)
+        Me.MniActionsExecute.Size = New System.Drawing.Size(192, 26)
         Me.MniActionsExecute.Text = "&Execute query"
         '
         'MniActionsStop
@@ -149,7 +152,7 @@ Partial Class MainForm
         Me.MniActionsStop.Enabled = False
         Me.MniActionsStop.Image = CType(resources.GetObject("MniActionsStop.Image"), System.Drawing.Image)
         Me.MniActionsStop.Name = "MniActionsStop"
-        Me.MniActionsStop.Size = New System.Drawing.Size(188, 22)
+        Me.MniActionsStop.Size = New System.Drawing.Size(192, 26)
         Me.MniActionsStop.Text = "&Stop query"
         '
         'MniCache
@@ -603,6 +606,24 @@ Partial Class MainForm
         Me.DataGridViewImageColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
         Me.DataGridViewImageColumn2.Width = 32
         '
+        'mniFile
+        '
+        Me.mniFile.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tssFile1, Me.mniFileExit})
+        Me.mniFile.Name = "mniFile"
+        Me.mniFile.Size = New System.Drawing.Size(37, 20)
+        Me.mniFile.Text = "&File"
+        '
+        'tssFile1
+        '
+        Me.tssFile1.Name = "tssFile1"
+        Me.tssFile1.Size = New System.Drawing.Size(149, 6)
+        '
+        'mniFileExit
+        '
+        Me.mniFileExit.Name = "mniFileExit"
+        Me.mniFileExit.Size = New System.Drawing.Size(152, 22)
+        Me.mniFileExit.Text = "E&xit"
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -698,4 +719,7 @@ Partial Class MainForm
     Friend WithEvents colResultHackedEmails As DataGridViewTextBoxColumn
     Friend WithEvents colResultLastDataLeakDate As DataGridViewTextBoxColumn
     Friend WithEvents colResultLastDataLeakPublicationDate As DataGridViewTextBoxColumn
+    Friend WithEvents mniFile As ToolStripMenuItem
+    Friend WithEvents tssFile1 As ToolStripSeparator
+    Friend WithEvents mniFileExit As ToolStripMenuItem
 End Class
