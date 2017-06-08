@@ -1,12 +1,10 @@
 ﻿Public Class MainForm
+    Private FormInitializing As Boolean = True
+
     Private Sub SetFormText()
         Me.Text = My.Application.Info.AssemblyName & " " &
             String.Format("{0}.{1}.{2}", My.Application.Info.Version.Major, My.Application.Info.Version.Minor, My.Application.Info.Version.Build) & " - " &
             My.Application.Info.Description
-
-        'If Not String.IsNullOrWhiteSpace(Me.CurrentScriptFile) Then
-        '    Me.Text &= " [" & Me.CurrentScriptFile & "]"
-        'End If
     End Sub
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -18,10 +16,12 @@
         Me.colResultLastDataLeakDate.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
         Me.colResultLastDataLeakPublicationDate.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
 
-        '*** Test ***
-        Me.TxtEmail.Text = "test@example.com"
-        Me.TxtEmailListFilePath.Text = "EmailList.txt"
+        'Reset Flag initialization
+        Me.FormInitializing = False
 
+        '*** Test ***
+        'Me.TxtEmail.Text = "test@example.com"
+        'Me.TxtEmailListFilePath.Text = "EmailList.txt"
     End Sub
 
 #Region "Menu File"
@@ -56,10 +56,6 @@
 
         'Creation and set Query Object
         Try
-            ''Aggiornamento Dati da  Controlli
-            'Me.LoadDataFromControls()
-            'Dim parameters = Me.GetParametersValuesFromControls()
-
             ''Gestione abilitazione Log
             'Dim logFile = Util.ReplaceParameter(Me.CurrentAutoTelnetScript.LogFile, Me.CurrentAutoTelnetScript, parameters)
             'If Not String.IsNullOrWhiteSpace(logFile) Then
@@ -221,6 +217,8 @@
                 If UtilMsgBox.ShowQuestion("Confirm clear cache directory?", MessageBoxDefaultButton.Button2) = DialogResult.Yes Then
                     System.IO.Directory.Delete(cacheDirectoryPath, True)
                 End If
+            Else
+                UtilMsgBox.ShowMessage("Cache directory not found")
             End If
         Catch ex As Exception
             UtilMsgBox.ShowErrorException("Error during clear cache", ex, False)
@@ -241,6 +239,8 @@
 
 #Region "Query Type controls"
     Private Sub RadioButtonCheckEmailType_CheckedChanged(sender As Object, e As EventArgs) Handles RbtCheckSingleEmail.CheckedChanged, RbtCheckEmailList.CheckedChanged
+        If Me.FormInitializing Then Exit Sub
+
         Me.TxtEmail.Enabled = Me.RbtCheckSingleEmail.Checked
         Me.TxtEmailListFilePath.Enabled = Me.RbtCheckEmailList.Checked
         Me.BtnBrowseEmailListFile.Enabled = Me.RbtCheckEmailList.Checked

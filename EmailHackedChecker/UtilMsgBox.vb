@@ -98,7 +98,7 @@
     End Function
 
     Public Overloads Shared Function ShowMessage(ByVal text As String, ByVal title As String) As System.Windows.Forms.DialogResult
-        Return ShowMessage(text, title, System.Windows.Forms.MessageBoxIcon.None)
+        Return ShowMessage(text, title, System.Windows.Forms.MessageBoxIcon.Information)
     End Function
 
     Public Overloads Shared Function ShowMessage(ByVal text As String,
