@@ -118,9 +118,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResultSchema.xsd</DependentUpon>
     </Compile>
-    <Compile Include="ResultSchema.vb">
-      <DependentUpon>ResultSchema.xsd</DependentUpon>
-    </Compile>
     <Compile Include="UtilLogFileWriter.vb" />
     <Compile Include="UtilMsgBox.vb" />
     <Compile Include="Util.vb" />

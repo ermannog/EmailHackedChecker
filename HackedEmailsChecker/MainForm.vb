@@ -20,9 +20,9 @@
         Me.FormInitializing = False
 
         '*** Test ***
-        Me.TxtEmail.Text = "test@example.com"
-        Me.TxtEmailListFilePath.Text = "EmailList.txt"
-        Me.ChkEnableCache.Checked = False
+        'Me.TxtEmail.Text = "test@example.com"
+        'Me.TxtEmailListFilePath.Text = "EmailList.txt"
+        'Me.ChkEnableCache.Checked = False
     End Sub
 
 #Region "Menu File"
@@ -198,9 +198,11 @@
         ElseIf TypeOf e.UserState Is QueryOutputResultEmailFoundAddedEventArgs Then
             Me.AddGridResultRow(DirectCast(e.UserState, QueryOutputResultEmailFoundAddedEventArgs).Result)
             Me.AddOutput(OutputTypes.ResultEmailFound, DirectCast(e.UserState, QueryOutputResultEmailFoundAddedEventArgs).Text, False)
+            Me.GrdResult.ScrollToLastRow()
         ElseIf TypeOf e.UserState Is QueryOutputResultEmailNotFoundAddedEventArgs Then
             Me.AddOutput(OutputTypes.ResultEmailNotFound, DirectCast(e.UserState, QueryOutputResultEmailNotFoundAddedEventArgs).Text, False)
             Me.AddGridResultRow(DirectCast(e.UserState, QueryOutputResultEmailNotFoundAddedEventArgs).Result)
+            Me.GrdResult.ScrollToLastRow()
         ElseIf TypeOf e.UserState Is QueryOutputErrorAddedEventArgs Then
             With DirectCast(e.UserState, QueryOutputErrorAddedEventArgs)
                 Me.AddOutput(OutputTypes.Error, UtilMsgBox.GetExceptionMessage(.Text, .Exception))
@@ -400,7 +402,7 @@
     End Sub
 #End Region
 
-#Region "Context Menu Grid Result"
+#Region "Query Result Grid Context Menu"
     Private Sub GrdResult_SelectionChanged(sender As Object, e As EventArgs) Handles GrdResult.SelectionChanged
         Me.MniEditCopy.Enabled = Me.GrdResult.SelectedCells.Count = 1 AndAlso Me.GrdResult.SelectedCells(0).ColumnIndex = Me.colResultEmail.Index
         Me.BtnCopyCell.Enabled = Me.MniEditCopy.Enabled
@@ -467,6 +469,14 @@
         Me.TxtOutput.ResumeLayout()
 
         If UtilLogFileWriter.LogEnabled Then UtilLogFileWriter.WriteNewEntry(logEntryType, text.TrimNewLine())
+    End Sub
+
+    Private Sub ChkShowOnlyDataLeakEmails_CheckedChanged(sender As Object, e As EventArgs) Handles ChkShowOnlyDataLeakEmails.CheckedChanged
+        If Me.ChkShowOnlyDataLeakEmails.Checked Then
+            Me.GridResultBindingSource.Filter = "DataLeakFound=True"
+        Else
+            Me.GridResultBindingSource.Filter = String.Empty
+        End If
     End Sub
 #End Region
 

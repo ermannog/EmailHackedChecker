@@ -28,4 +28,11 @@
 
         Return value
     End Function
+
+    <System.Runtime.CompilerServices.Extension()>
+    Public Sub ScrollToLastRow(dataGridView As System.Windows.Forms.DataGridView)
+        If dataGridView.RowCount > 0 Then
+            dataGridView.FirstDisplayedScrollingRowIndex = dataGridView.RowCount - 1
+        End If
+    End Sub
 End Module

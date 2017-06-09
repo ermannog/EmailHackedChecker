@@ -121,15 +121,6 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="MniEditCopy.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAACZSURBVDhPtZLNDcMgDEYzQmbizgCswikbdLQMwoE0VFwd
-        vgqciDqSS1VLT/zJD1swEdFPnJMucs6PAgnEwqwRkLWWjDGMc45CCJCsKgGStvhksPbevysZEjSJKCib
-        Ys8pvdSC2573PekEOOxvaz0PCa4JGAGqHBJ0LF8L6uNw/EfQvwJoPdc8Dklw9/fBUvM4PgSjiJt6aDoA
-        qRi4IqbtzloAAAAASUVORK5CYII=
-</value>
-  </data>
   <data name="MniActionsExecute.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -236,4 +227,13 @@
   <metadata name="OfdEmailList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>885, 17</value>
   </metadata>
+  <data name="MniEditCopy.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAACZSURBVDhPtZLNDcMgDEYzQmbizgCswikbdLQMwoE0VFwd
+        vgqciDqSS1VLT/zJD1swEdFPnJMucs6PAgnEwqwRkLWWjDGMc45CCJCsKgGStvhksPbevysZEjSJKCib
+        Ys8pvdSC2573PekEOOxvaz0PCa4JGAGqHBJ0LF8L6uNw/EfQvwJoPdc8Dklw9/fBUvM4PgSjiJt6aDoA
+        qRi4IqbtzloAAAAASUVORK5CYII=
+</value>
+  </data>
 </root>
