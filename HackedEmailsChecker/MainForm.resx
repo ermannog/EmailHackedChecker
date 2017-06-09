@@ -153,7 +153,7 @@
   <data name="BtnExecute.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAC9SURBVDhPY0AH379/T/j69ev+b9++/UfD50FyUGWYACip
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAC9SURBVDhPY0AH379/T/j69ev+b9++/UfD50FyUGWYACip
         AFJ09P7R/wXbCv4bzzRGwSAxkBxIzZcvXwyg2iAAqvl9x6EODI3ouGZPDciQ9yiGgJxMjGYYhhpyHqwZ
         5C+Q09AVPfv07H/a5jQMcRgG6QGHCdCk9dj8DAPLLi377zDfAUMepAfsCiCBIQnCyACXa0B6iTIABtBd
         Qz8DCHmBskCkOBpBgKKEBAIUJ2UQgBpCXmZCBiB/EZ+dGRgAYi5dA/2OxeYAAAAASUVORK5CYII=
@@ -162,14 +162,14 @@
   <data name="BtnStop.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAA9SURBVDhPY6AK+Pbt239yMFQ7xAAnJyeSMFYDPrz/SBTG
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA9SURBVDhPY6AK+Pbt239yMFQ7xAAnJyeSMFYDPrz/SBTG
         awDMBlx41ICRYQAxGKcBpGAMA8jBUO2UAAYGACzWEgsM2OOeAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="BtnClearCache.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAD/SURBVDhPYwCB79+/O3x8+fz/w0N7/n/79o0kDDbg69ev
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAD/SURBVDhPYwCB79+/O3x8+fz/w0N7/n/79o0kDDbg69ev
         DWf6mv4vVOP9f7AkBUXBkT27wGJP7935HxkZ+d/JyQmO4QYAXZDw7Pyp/8uMZcCGHGssBkte2Lnl/xoH
         rf+n507+n5KSgqIZxQAQAHFe37n5f6OvJdwQkIHXVsyHuwYbhmqHGADCoLCAuWRblDuGBnQM1Y7pApDT
         QTQu56N4ARiI+29vXQu3GRaQIOeDxG4f2Y8/DEDOBmlE1gzDoMAFuQpEI4vDMNgAIOM9SCMoKtEVEMJg
@@ -197,27 +197,6 @@
   </metadata>
   <metadata name="GridResultBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>659, 17</value>
-  </metadata>
-  <metadata name="colResultImage.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colResultHaveIBeenPwned.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colResultHackedEmails.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colResultLastDataLeakDate.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colResultLastDataLeakPublicationDate.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="GridResultBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>659, 17</value>
-  </metadata>
-  <metadata name="DstResultSchema.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>485, 17</value>
   </metadata>
   <metadata name="DstResultSchema.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>485, 17</value>

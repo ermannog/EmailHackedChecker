@@ -415,7 +415,7 @@ Partial Public Class ResultSchema
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddGridResultRow(ByVal Email As String, ByVal DataLeakFound As Boolean, ByVal HaveIBeenPwned As String, ByVal HackedEmails As String, ByVal LastDataLeakDate As Date, ByVal LastDataLeakPublicationDate As Date) As GridResultRow
+        Public Overloads Function AddGridResultRow(ByVal Email As String, ByVal DataLeakFound As Boolean, ByVal HaveIBeenPwned As Long, ByVal HackedEmails As Long, ByVal LastDataLeakDate As Date, ByVal LastDataLeakPublicationDate As Date) As GridResultRow
             Dim rowGridResultRow As GridResultRow = CType(Me.NewRow,GridResultRow)
             Dim columnValuesArray() As Object = New Object() {Email, DataLeakFound, HaveIBeenPwned, HackedEmails, LastDataLeakDate, LastDataLeakPublicationDate}
             rowGridResultRow.ItemArray = columnValuesArray
@@ -461,9 +461,9 @@ Partial Public Class ResultSchema
             MyBase.Columns.Add(Me.columnEmail)
             Me.columnDataLeakFound = New Global.System.Data.DataColumn("DataLeakFound", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnDataLeakFound)
-            Me.columnHaveIBeenPwned = New Global.System.Data.DataColumn("HaveIBeenPwned", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnHaveIBeenPwned = New Global.System.Data.DataColumn("HaveIBeenPwned", GetType(Long), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnHaveIBeenPwned)
-            Me.columnHackedEmails = New Global.System.Data.DataColumn("HackedEmails", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnHackedEmails = New Global.System.Data.DataColumn("HackedEmails", GetType(Long), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnHackedEmails)
             Me.columnLastDataLeakDate = New Global.System.Data.DataColumn("LastDataLeakDate", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnLastDataLeakDate)
@@ -645,10 +645,10 @@ Partial Public Class ResultSchema
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property HaveIBeenPwned() As String
+        Public Property HaveIBeenPwned() As Long
             Get
                 Try 
-                    Return CType(Me(Me.tableGridResult.HaveIBeenPwnedColumn),String)
+                    Return CType(Me(Me.tableGridResult.HaveIBeenPwnedColumn),Long)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'HaveIBeenPwned' in table 'GridResult' is DBNull.", e)
                 End Try
@@ -660,10 +660,10 @@ Partial Public Class ResultSchema
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property HackedEmails() As String
+        Public Property HackedEmails() As Long
             Get
                 Try 
-                    Return CType(Me(Me.tableGridResult.HackedEmailsColumn),String)
+                    Return CType(Me(Me.tableGridResult.HackedEmailsColumn),Long)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'HackedEmails' in table 'GridResult' is DBNull.", e)
                 End Try

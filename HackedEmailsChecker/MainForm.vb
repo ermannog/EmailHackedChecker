@@ -20,12 +20,13 @@
         Me.FormInitializing = False
 
         '*** Test ***
-        'Me.TxtEmail.Text = "test@example.com"
-        'Me.TxtEmailListFilePath.Text = "EmailList.txt"
+        Me.TxtEmail.Text = "test@example.com"
+        Me.TxtEmailListFilePath.Text = "EmailList.txt"
+        Me.ChkEnableCache.Checked = False
     End Sub
 
 #Region "Menu File"
-    Private Sub mniFileExit_Click(sender As Object, e As EventArgs) Handles mniFileExit.Click
+    Private Sub MniFileExit_Click(sender As Object, e As EventArgs) Handles MniFileExit.Click
         System.Environment.Exit(0)
     End Sub
 #End Region
@@ -67,7 +68,7 @@
             'Creation Query
             Me.Query = New HackedEmailsChecker.Query
             Me.Query.DatabaseHaveIBeenPwnedEnabled = Me.ChkHaveIBeenPwned.Checked
-            Me.Query.DatabaseHackedEmails = Me.ChkHackedEmails.Checked
+            Me.Query.DatabaseHackedEmailsEnabled = Me.ChkHackedEmails.Checked
             Me.Query.EnableCache = Me.ChkEnableCache.Checked
             Me.Query.CacheTTL = System.Convert.ToUInt16(Me.NudCacheTTL.Value)
 
@@ -324,13 +325,43 @@
             ElseIf e.ColumnIndex = Me.colResultHaveIBeenPwned.Index OrElse e.ColumnIndex = Me.colResultHackedEmails.Index Then
                 Dim resultRow = DirectCast(DirectCast(Me.GridResultBindingSource.List(e.RowIndex), System.Data.DataRowView).Row, ResultSchema.GridResultRow)
 
-                If resultRow.DataLeakFound Then
-                    e.CellStyle.ForeColor = System.Drawing.Color.Red
-                Else
+                Dim leaks As Int64? = Nothing
+                If e.ColumnIndex = Me.colResultHaveIBeenPwned.Index AndAlso Not resultRow.IsHaveIBeenPwnedNull() Then leaks = resultRow.HaveIBeenPwned
+                If e.ColumnIndex = Me.colResultHackedEmails.Index AndAlso Not resultRow.IsHackedEmailsNull() Then leaks = resultRow.HackedEmails
+
+                If leaks.HasValue AndAlso leaks.Value = 0 Then
+                    e.Value = "Not found"
+                    e.FormattingApplied = True
                     e.CellStyle.ForeColor = System.Drawing.Color.Green
+                ElseIf leaks.HasValue AndAlso leaks.Value > 0 Then
+                    e.Value = String.Format("Found {0} leaks", System.Convert.ToInt64(leaks))
+                    e.FormattingApplied = True
+                    e.CellStyle.ForeColor = System.Drawing.Color.Red
                 End If
+
+
+
+
+                'ElseIf e.ColumnIndex = Me.colResultHackedEmails.Index Then
+                '    Dim resultRow = DirectCast(DirectCast(Me.GridResultBindingSource.List(e.RowIndex), System.Data.DataRowView).Row, ResultSchema.GridResultRow)
+
+                'If System.Convert.ToInt64(e.Value) = 0 Then
+                '    e.Value = "Not found"
+                '    e.CellStyle.ForeColor = System.Drawing.Color.Green
+                'Else
+                '    e.Value = String.Format("Found {0} leaks", System.Convert.ToInt64(e.Value))
+                '    e.CellStyle.ForeColor = System.Drawing.Color.Red
+                'End If
+
+                'e.FormattingApplied = True
+
+                'If resultRow.DataLeakFound Then
+                '        e.CellStyle.ForeColor = System.Drawing.Color.Red
+                '    Else
+                '        e.CellStyle.ForeColor = System.Drawing.Color.Green
+                '    End If
             ElseIf e.ColumnIndex = Me.colResultLastDataLeakDate.Index OrElse
-                e.ColumnIndex = Me.colResultLastDataLeakPublicationDate.Index Then
+                    e.ColumnIndex = Me.colResultLastDataLeakPublicationDate.Index Then
                 If e.Value IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(e.Value.ToString()) Then
                     e.Value = DirectCast(e.Value, DateTime).ToString("dd MMMM yyyy", New System.Globalization.CultureInfo("en-US"))
                     e.FormattingApplied = True
@@ -354,17 +385,18 @@
 
         If result.Found Then row.DataLeakFound = True
 
-        'Set Result Detail
-        Dim resultDetail As String = String.Empty
-        If result.Found Then
-            resultDetail = String.Format("Found {0} leaks", result.Items.Count)
-        Else
-            resultDetail = "Not found"
-        End If
+        'Set Result Leaks
+        'Dim resultDetail As String = String.Empty
+        'If result.Found Then
+        '    resultDetail = String.Format("Found {0} leaks", result.Items.Count)
+        'Else
+        '    resultDetail = "Not found"
+        'End If
 
         Dim resultDetailColumn = (From c In row.Table.Columns Where DirectCast(c, System.Data.DataColumn).ColumnName = result.Database.ToString()).SingleOrDefault()
         If resultDetailColumn IsNot Nothing Then
-            row(DirectCast(resultDetailColumn, System.Data.DataColumn)) = resultDetail
+            'row(DirectCast(resultDetailColumn, System.Data.DataColumn)) = resultDetail
+            row(DirectCast(resultDetailColumn, System.Data.DataColumn)) = result.Items.Count
         End If
 
         'Set Last data leak date
@@ -372,7 +404,6 @@
             If row.IsLastDataLeakDateNull() OrElse row.LastDataLeakDate < result.LastDataLeak.DataLeakDate.Value Then
                 row.LastDataLeakDate = result.LastDataLeak.DataLeakDate.Value
             End If
-            ' row.LastDataLeakDate = IIf((result.LastDataLeak IsNot Nothing), result.LastDataLeak.DataLeakDate.Value.ToString("dd MMMM yyyy"), "Unknow").ToString()
         End If
 
 
@@ -381,7 +412,6 @@
             If row.IsLastDataLeakPublicationDateNull() OrElse row.LastDataLeakPublicationDate < result.LastDataLeakPublished.DataLeakDate.Value Then
                 row.LastDataLeakPublicationDate = result.LastDataLeakPublished.DataLeakDate.Value
             End If
-            ' row.LastDataLeakDate = IIf((result.LastDataLeak IsNot Nothing), result.LastDataLeak.DataLeakDate.Value.ToString("dd MMMM yyyy"), "Unknow").ToString()
         End If
 
 

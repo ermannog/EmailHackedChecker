@@ -23,7 +23,7 @@
     Public Property DatabaseHaveIBeenPwnedEnabled As Boolean = True
     Private DatabaseHaveIBeenPwnedLastRequest As DateTime? = Nothing
 
-    Public Property DatabaseHackedEmails As Boolean = True
+    Public Property DatabaseHackedEmailsEnabled As Boolean = True
     Private DatabaseHackedEmailsLastRequest As DateTime? = Nothing
 
     Public Property EnableCache As Boolean = True
@@ -37,6 +37,9 @@
     Public DatabaseLastRequest As New System.Collections.Generic.Dictionary(Of Util.Databases, DateTime)
 
 #Region "Method Execute"
+    Delegate Function QueryExecute(ByVal email As String) As QueryResult
+
+
     Public Overloads Sub Execute(email As String)
         Dim emails As New List(Of String)
         emails.Add(email)
@@ -53,6 +56,19 @@
         For Each email In emails
             For Each database As Util.Databases In System.Enum.GetValues(GetType(Util.Databases))
                 If database = Util.Databases.Undefined Then Continue For
+
+                Dim queryExecute As QueryExecute = Nothing
+
+                Select Case database
+                    Case Util.Databases.HaveIBeenPwned
+                        If Not Me.DatabaseHaveIBeenPwnedEnabled Then Continue For
+                        queryExecute = AddressOf UtilHaveIBeenPwned.Query
+                    Case Util.Databases.HackedEmails
+                        If Not Me.DatabaseHackedEmailsEnabled Then Continue For
+                        queryExecute = AddressOf UtilHackedEmails.Query
+                    Case Else
+                        Throw New System.NotImplementedException("Execute method in Query class not implemented for database " & database.ToString())
+                End Select
 
                 'Check flag Stop Execute
                 If Me.StopExecuteQueryFlag Then
@@ -93,15 +109,7 @@
                         End If
 
                         'Request to database
-                        If database = Util.Databases.HaveIBeenPwned AndAlso Me.DatabaseHaveIBeenPwnedEnabled Then
-                            result = UtilHaveIBeenPwned.Query(email)
-                            Me.DatabaseHaveIBeenPwnedLastRequest = Now
-                        ElseIf database = Util.Databases.HackedEmails AndAlso Me.DatabaseHackedEmails Then
-                            result = UtilHackedEmails.Query(email)
-                            Me.DatabaseHackedEmailsLastRequest = Now
-                        Else
-                            Throw New System.NotImplementedException("Execute method in Query class not implemented for database " & database.ToString())
-                        End If
+                        result = queryExecute(email)
 
                         'Update last request date
                         If Not Me.DatabaseLastRequest.ContainsKey(database) Then
