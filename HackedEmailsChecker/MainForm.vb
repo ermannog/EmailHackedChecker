@@ -20,8 +20,8 @@
         Me.FormInitializing = False
 
         '*** Test ***
-        'Me.TxtEmail.Text = "test@example.com"
-        'Me.TxtEmailListFilePath.Text = "EmailList.txt"
+        Me.TxtEmail.Text = "test@example.com"
+        Me.TxtEmailListFilePath.Text = "EmailList.txt"
     End Sub
 
 #Region "Menu File"
@@ -65,7 +65,7 @@
             'End If
 
             'Creation Query
-            Me.Query = New EmailHackedChecker.Query
+            Me.Query = New HackedEmailsChecker.Query
             Me.Query.DatabaseHaveIBeenPwnedEnabled = Me.ChkHaveIBeenPwned.Checked
             Me.Query.DatabaseHackedEmails = Me.ChkHackedEmails.Checked
             Me.Query.EnableCache = Me.ChkEnableCache.Checked
@@ -200,6 +200,7 @@
     Private Sub Query_OutputResultEmailFoundAdded(sender As Object, e As QueryOutputResultEmailFoundAddedEventArgs)
         Me.BkwQuery.ReportProgress(Nothing, e)
     End Sub
+
     Private Sub Query_OutputResultEmailNotFoundAdded(sender As Object, e As QueryOutputResultEmailNotFoundAddedEventArgs)
         Me.BkwQuery.ReportProgress(Nothing, e)
     End Sub
@@ -390,6 +391,19 @@
         Me.DstResultSchema.GridResult.AcceptChanges()
     End Sub
 #End Region
+
+    '#Region "Context Menu Grid Result"
+    'https://msdn.microsoft.com/it-it/library/system.windows.forms.datagridview.clipboardcopymode(v=vs.110).aspx
+    '    Private Sub GrdResult_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles GrdResult.CellMouseClick
+    '        'Dim hitTest = Me.GrdResult.HitTest(e.X, e.Y)
+    '        ''hitTest.Type=
+    '        If e.Button = MouseButtons.Right AndAlso e.RowIndex >= 0 Then
+    '            If Me.GrdResult.ContextMenuStrip Is Nothing Then Me.GrdResult.ContextMenuStrip = Me.CmnGridResult
+    '        Else
+    '            If Me.GrdResult.ContextMenuStrip IsNot Nothing Then Me.GrdResult.ContextMenuStrip = Nothing
+    '        End If
+    '    End Sub
+    '#End Region
 
 #Region "Gestione Output"
     Private Enum OutputTypes As Integer

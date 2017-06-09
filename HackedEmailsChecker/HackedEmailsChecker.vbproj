@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6D91EE24-F4B0-4C6E-8303-B678B6974612}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>EmailHackedChecker.My.MyApplication</StartupObject>
-    <RootNamespace>EmailHackedChecker</RootNamespace>
-    <AssemblyName>EmailHackedChecker</AssemblyName>
+    <StartupObject>HackedEmailsChecker.My.MyApplication</StartupObject>
+    <RootNamespace>HackedEmailsChecker</RootNamespace>
+    <AssemblyName>HackedEmailsChecker</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
@@ -54,7 +54,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>EmailHacked.ico</ApplicationIcon>
+    <ApplicationIcon>HackedEmail.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -203,7 +203,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="EmailHacked.ico" />
+    <Content Include="HackedEmail.ico" />
     <Content Include="Note.txt" />
     <None Include="Resources\Security_Shields_Critical_32xSM_color.png" />
     <None Include="Resources\Security_Shields_Complete_and_ok_32xSM_color.png" />

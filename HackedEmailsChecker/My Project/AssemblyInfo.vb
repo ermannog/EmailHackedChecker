@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("EmailHackedChecker")>
-<Assembly: AssemblyDescription("Email hacked checker")>
+<Assembly: AssemblyTitle("HackedEmailsChecker")>
+<Assembly: AssemblyDescription("Hacked emails checker")>
 <Assembly: AssemblyCompany("DevAdmin")>
-<Assembly: AssemblyProduct("EmailHackedChecker")>
+<Assembly: AssemblyProduct("HackedEmailsChecker")>
 <Assembly: AssemblyCopyright("Copyright ©  2017")>
 <Assembly: AssemblyTrademark("DevAdmin")>
 
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("0.1.0.0")>
-<Assembly: AssemblyFileVersion("0.1.0.0")>
+<Assembly: AssemblyVersion("1.0.0.0")>
+<Assembly: AssemblyFileVersion("1.0.0.0")>

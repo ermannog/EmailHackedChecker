@@ -24,11 +24,13 @@ Partial Class MainForm
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.RbtCheckSingleEmail = New System.Windows.Forms.RadioButton()
         Me.TxtEmail = New System.Windows.Forms.TextBox()
         Me.MnuMain = New System.Windows.Forms.MenuStrip()
+        Me.mniFile = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mniFileExit = New System.Windows.Forms.ToolStripMenuItem()
         Me.MniActions = New System.Windows.Forms.ToolStripMenuItem()
         Me.MniActionsExecute = New System.Windows.Forms.ToolStripMenuItem()
         Me.MniActionsStop = New System.Windows.Forms.ToolStripMenuItem()
@@ -52,7 +54,7 @@ Partial Class MainForm
         Me.colResultLastDataLeakDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colResultLastDataLeakPublicationDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GridResultBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.DstResultSchema = New EmailHackedChecker.ResultSchema()
+        Me.DstResultSchema = New HackedEmailsChecker.ResultSchema()
         Me.BkwQuery = New System.ComponentModel.BackgroundWorker()
         Me.GrbQueryType = New System.Windows.Forms.GroupBox()
         Me.BtnBrowseEmailListFile = New System.Windows.Forms.Button()
@@ -75,9 +77,8 @@ Partial Class MainForm
         Me.Lbl = New System.Windows.Forms.Label()
         Me.OfdEmailList = New System.Windows.Forms.OpenFileDialog()
         Me.DataGridViewImageColumn2 = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.mniFile = New System.Windows.Forms.ToolStripMenuItem()
-        Me.tssFile1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.mniFileExit = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CmnGridResult = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuMain.SuspendLayout()
         Me.TlsMain.SuspendLayout()
         Me.StsMain.SuspendLayout()
@@ -95,16 +96,17 @@ Partial Class MainForm
         Me.GrbOutput.SuspendLayout()
         Me.GrbQueryOptions.SuspendLayout()
         CType(Me.NudSourceRequestDelay, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.CmnGridResult.SuspendLayout()
         Me.SuspendLayout()
         '
         'RbtCheckSingleEmail
         '
         Me.RbtCheckSingleEmail.AutoSize = True
         Me.RbtCheckSingleEmail.Checked = True
-        Me.RbtCheckSingleEmail.Location = New System.Drawing.Point(4, 18)
-        Me.RbtCheckSingleEmail.Margin = New System.Windows.Forms.Padding(2)
+        Me.RbtCheckSingleEmail.Location = New System.Drawing.Point(5, 22)
+        Me.RbtCheckSingleEmail.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.RbtCheckSingleEmail.Name = "RbtCheckSingleEmail"
-        Me.RbtCheckSingleEmail.Size = New System.Drawing.Size(117, 17)
+        Me.RbtCheckSingleEmail.Size = New System.Drawing.Size(151, 21)
         Me.RbtCheckSingleEmail.TabIndex = 0
         Me.RbtCheckSingleEmail.TabStop = True
         Me.RbtCheckSingleEmail.Text = "Check single Email:"
@@ -114,10 +116,10 @@ Partial Class MainForm
         '
         Me.TxtEmail.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TxtEmail.Location = New System.Drawing.Point(146, 17)
-        Me.TxtEmail.Margin = New System.Windows.Forms.Padding(2)
+        Me.TxtEmail.Location = New System.Drawing.Point(195, 21)
+        Me.TxtEmail.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.TxtEmail.Name = "TxtEmail"
-        Me.TxtEmail.Size = New System.Drawing.Size(477, 20)
+        Me.TxtEmail.Size = New System.Drawing.Size(635, 22)
         Me.TxtEmail.TabIndex = 1
         '
         'MnuMain
@@ -126,16 +128,29 @@ Partial Class MainForm
         Me.MnuMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mniFile, Me.MniActions, Me.MniCache, Me.MniHelp})
         Me.MnuMain.Location = New System.Drawing.Point(0, 0)
         Me.MnuMain.Name = "MnuMain"
-        Me.MnuMain.Padding = New System.Windows.Forms.Padding(4, 2, 0, 2)
-        Me.MnuMain.Size = New System.Drawing.Size(884, 24)
+        Me.MnuMain.Padding = New System.Windows.Forms.Padding(5, 2, 0, 2)
+        Me.MnuMain.Size = New System.Drawing.Size(1179, 28)
         Me.MnuMain.TabIndex = 2
         Me.MnuMain.Text = "MenuStrip1"
+        '
+        'mniFile
+        '
+        Me.mniFile.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mniFileExit})
+        Me.mniFile.Name = "mniFile"
+        Me.mniFile.Size = New System.Drawing.Size(44, 24)
+        Me.mniFile.Text = "&File"
+        '
+        'mniFileExit
+        '
+        Me.mniFileExit.Name = "mniFileExit"
+        Me.mniFileExit.Size = New System.Drawing.Size(108, 26)
+        Me.mniFileExit.Text = "E&xit"
         '
         'MniActions
         '
         Me.MniActions.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MniActionsExecute, Me.MniActionsStop})
         Me.MniActions.Name = "MniActions"
-        Me.MniActions.Size = New System.Drawing.Size(59, 20)
+        Me.MniActions.Size = New System.Drawing.Size(70, 24)
         Me.MniActions.Text = "&Actions"
         '
         'MniActionsExecute
@@ -144,7 +159,7 @@ Partial Class MainForm
         Me.MniActionsExecute.Image = CType(resources.GetObject("MniActionsExecute.Image"), System.Drawing.Image)
         Me.MniActionsExecute.Name = "MniActionsExecute"
         Me.MniActionsExecute.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
-        Me.MniActionsExecute.Size = New System.Drawing.Size(192, 26)
+        Me.MniActionsExecute.Size = New System.Drawing.Size(227, 26)
         Me.MniActionsExecute.Text = "&Execute query"
         '
         'MniActionsStop
@@ -152,43 +167,43 @@ Partial Class MainForm
         Me.MniActionsStop.Enabled = False
         Me.MniActionsStop.Image = CType(resources.GetObject("MniActionsStop.Image"), System.Drawing.Image)
         Me.MniActionsStop.Name = "MniActionsStop"
-        Me.MniActionsStop.Size = New System.Drawing.Size(192, 26)
+        Me.MniActionsStop.Size = New System.Drawing.Size(227, 26)
         Me.MniActionsStop.Text = "&Stop query"
         '
         'MniCache
         '
         Me.MniCache.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MniClearCache})
         Me.MniCache.Name = "MniCache"
-        Me.MniCache.Size = New System.Drawing.Size(52, 20)
+        Me.MniCache.Size = New System.Drawing.Size(61, 24)
         Me.MniCache.Text = "Cache"
         '
         'MniClearCache
         '
         Me.MniClearCache.Image = CType(resources.GetObject("MniClearCache.Image"), System.Drawing.Image)
         Me.MniClearCache.Name = "MniClearCache"
-        Me.MniClearCache.Size = New System.Drawing.Size(135, 22)
+        Me.MniClearCache.Size = New System.Drawing.Size(160, 26)
         Me.MniClearCache.Text = "&Clear cache"
         '
         'MniHelp
         '
         Me.MniHelp.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MniHelpAbout})
         Me.MniHelp.Name = "MniHelp"
-        Me.MniHelp.Size = New System.Drawing.Size(44, 20)
+        Me.MniHelp.Size = New System.Drawing.Size(53, 24)
         Me.MniHelp.Text = "&Help"
         '
         'MniHelpAbout
         '
         Me.MniHelpAbout.Name = "MniHelpAbout"
-        Me.MniHelpAbout.Size = New System.Drawing.Size(116, 22)
+        Me.MniHelpAbout.Size = New System.Drawing.Size(134, 26)
         Me.MniHelpAbout.Text = "&About..."
         '
         'TlsMain
         '
         Me.TlsMain.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.TlsMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnExecute, Me.BtnStop, Me.ToolStripSeparator1, Me.BtnClearCache})
-        Me.TlsMain.Location = New System.Drawing.Point(0, 24)
+        Me.TlsMain.Location = New System.Drawing.Point(0, 28)
         Me.TlsMain.Name = "TlsMain"
-        Me.TlsMain.Size = New System.Drawing.Size(884, 27)
+        Me.TlsMain.Size = New System.Drawing.Size(1179, 27)
         Me.TlsMain.TabIndex = 3
         Me.TlsMain.Text = "ToolStrip1"
         '
@@ -230,17 +245,17 @@ Partial Class MainForm
         '
         Me.StsMain.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.StsMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblStatus})
-        Me.StsMain.Location = New System.Drawing.Point(0, 539)
+        Me.StsMain.Location = New System.Drawing.Point(0, 665)
         Me.StsMain.Name = "StsMain"
-        Me.StsMain.Padding = New System.Windows.Forms.Padding(1, 0, 10, 0)
-        Me.StsMain.Size = New System.Drawing.Size(884, 22)
+        Me.StsMain.Padding = New System.Windows.Forms.Padding(1, 0, 13, 0)
+        Me.StsMain.Size = New System.Drawing.Size(1179, 25)
         Me.StsMain.TabIndex = 4
         Me.StsMain.Text = "StatusStrip1"
         '
         'LblStatus
         '
         Me.LblStatus.Name = "LblStatus"
-        Me.LblStatus.Size = New System.Drawing.Size(39, 17)
+        Me.LblStatus.Size = New System.Drawing.Size(50, 20)
         Me.LblStatus.Text = "Ready"
         Me.LblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -249,10 +264,10 @@ Partial Class MainForm
         Me.GrbQueryResult.Controls.Add(Me.GrdResult)
         Me.GrbQueryResult.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GrbQueryResult.Location = New System.Drawing.Point(0, 0)
-        Me.GrbQueryResult.Margin = New System.Windows.Forms.Padding(2)
+        Me.GrbQueryResult.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.GrbQueryResult.Name = "GrbQueryResult"
-        Me.GrbQueryResult.Padding = New System.Windows.Forms.Padding(2)
-        Me.GrbQueryResult.Size = New System.Drawing.Size(866, 236)
+        Me.GrbQueryResult.Padding = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.GrbQueryResult.Size = New System.Drawing.Size(1155, 290)
         Me.GrbQueryResult.TabIndex = 5
         Me.GrbQueryResult.TabStop = False
         Me.GrbQueryResult.Text = "Query result"
@@ -266,11 +281,12 @@ Partial Class MainForm
         Me.GrdResult.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colResultImage, Me.colResultEmail, Me.colResultHaveIBeenPwned, Me.colResultHackedEmails, Me.colResultLastDataLeakDate, Me.colResultLastDataLeakPublicationDate})
         Me.GrdResult.DataSource = Me.GridResultBindingSource
         Me.GrdResult.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GrdResult.Location = New System.Drawing.Point(2, 15)
+        Me.GrdResult.Location = New System.Drawing.Point(3, 17)
+        Me.GrdResult.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.GrdResult.Name = "GrdResult"
         Me.GrdResult.ReadOnly = True
         Me.GrdResult.RowHeadersVisible = False
-        Me.GrdResult.Size = New System.Drawing.Size(862, 219)
+        Me.GrdResult.Size = New System.Drawing.Size(1149, 271)
         Me.GrdResult.TabIndex = 0
         '
         'colResultImage
@@ -289,7 +305,7 @@ Partial Class MainForm
         Me.colResultEmail.HeaderText = "Email"
         Me.colResultEmail.Name = "colResultEmail"
         Me.colResultEmail.ReadOnly = True
-        Me.colResultEmail.Width = 57
+        Me.colResultEmail.Width = 71
         '
         'colResultHaveIBeenPwned
         '
@@ -299,7 +315,7 @@ Partial Class MainForm
         Me.colResultHaveIBeenPwned.Name = "colResultHaveIBeenPwned"
         Me.colResultHaveIBeenPwned.ReadOnly = True
         Me.colResultHaveIBeenPwned.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.colResultHaveIBeenPwned.Width = 109
+        Me.colResultHaveIBeenPwned.Width = 137
         '
         'colResultHackedEmails
         '
@@ -309,31 +325,31 @@ Partial Class MainForm
         Me.colResultHackedEmails.Name = "colResultHackedEmails"
         Me.colResultHackedEmails.ReadOnly = True
         Me.colResultHackedEmails.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.colResultHackedEmails.Width = 147
+        Me.colResultHackedEmails.Width = 192
         '
         'colResultLastDataLeakDate
         '
         Me.colResultLastDataLeakDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
         Me.colResultLastDataLeakDate.DataPropertyName = "LastDataLeakDate"
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.colResultLastDataLeakDate.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.colResultLastDataLeakDate.DefaultCellStyle = DataGridViewCellStyle5
         Me.colResultLastDataLeakDate.HeaderText = "Last data leak"
         Me.colResultLastDataLeakDate.Name = "colResultLastDataLeakDate"
         Me.colResultLastDataLeakDate.ReadOnly = True
         Me.colResultLastDataLeakDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.colResultLastDataLeakDate.Width = 80
+        Me.colResultLastDataLeakDate.Width = 103
         '
         'colResultLastDataLeakPublicationDate
         '
         Me.colResultLastDataLeakPublicationDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
         Me.colResultLastDataLeakPublicationDate.DataPropertyName = "LastDataLeakPublicationDate"
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.colResultLastDataLeakPublicationDate.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.colResultLastDataLeakPublicationDate.DefaultCellStyle = DataGridViewCellStyle6
         Me.colResultLastDataLeakPublicationDate.HeaderText = "Last data leak publication"
         Me.colResultLastDataLeakPublicationDate.Name = "colResultLastDataLeakPublicationDate"
         Me.colResultLastDataLeakPublicationDate.ReadOnly = True
         Me.colResultLastDataLeakPublicationDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.colResultLastDataLeakPublicationDate.Width = 134
+        Me.colResultLastDataLeakPublicationDate.Width = 175
         '
         'GridResultBindingSource
         '
@@ -361,11 +377,11 @@ Partial Class MainForm
         Me.GrbQueryType.Controls.Add(Me.RbtCheckEmailList)
         Me.GrbQueryType.Controls.Add(Me.TxtEmail)
         Me.GrbQueryType.Controls.Add(Me.RbtCheckSingleEmail)
-        Me.GrbQueryType.Location = New System.Drawing.Point(9, 55)
-        Me.GrbQueryType.Margin = New System.Windows.Forms.Padding(2)
+        Me.GrbQueryType.Location = New System.Drawing.Point(12, 68)
+        Me.GrbQueryType.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.GrbQueryType.Name = "GrbQueryType"
-        Me.GrbQueryType.Padding = New System.Windows.Forms.Padding(2)
-        Me.GrbQueryType.Size = New System.Drawing.Size(634, 84)
+        Me.GrbQueryType.Padding = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.GrbQueryType.Size = New System.Drawing.Size(845, 103)
         Me.GrbQueryType.TabIndex = 6
         Me.GrbQueryType.TabStop = False
         Me.GrbQueryType.Text = "Query type"
@@ -374,10 +390,10 @@ Partial Class MainForm
         '
         Me.BtnBrowseEmailListFile.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnBrowseEmailListFile.Enabled = False
-        Me.BtnBrowseEmailListFile.Location = New System.Drawing.Point(566, 47)
-        Me.BtnBrowseEmailListFile.Margin = New System.Windows.Forms.Padding(2)
+        Me.BtnBrowseEmailListFile.Location = New System.Drawing.Point(755, 58)
+        Me.BtnBrowseEmailListFile.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.BtnBrowseEmailListFile.Name = "BtnBrowseEmailListFile"
-        Me.BtnBrowseEmailListFile.Size = New System.Drawing.Size(56, 19)
+        Me.BtnBrowseEmailListFile.Size = New System.Drawing.Size(75, 23)
         Me.BtnBrowseEmailListFile.TabIndex = 4
         Me.BtnBrowseEmailListFile.Text = "Browse..."
         Me.BtnBrowseEmailListFile.UseVisualStyleBackColor = True
@@ -387,19 +403,19 @@ Partial Class MainForm
         Me.TxtEmailListFilePath.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TxtEmailListFilePath.Enabled = False
-        Me.TxtEmailListFilePath.Location = New System.Drawing.Point(146, 47)
-        Me.TxtEmailListFilePath.Margin = New System.Windows.Forms.Padding(2)
+        Me.TxtEmailListFilePath.Location = New System.Drawing.Point(195, 58)
+        Me.TxtEmailListFilePath.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.TxtEmailListFilePath.Name = "TxtEmailListFilePath"
-        Me.TxtEmailListFilePath.Size = New System.Drawing.Size(416, 20)
+        Me.TxtEmailListFilePath.Size = New System.Drawing.Size(553, 22)
         Me.TxtEmailListFilePath.TabIndex = 3
         '
         'RbtCheckEmailList
         '
         Me.RbtCheckEmailList.AutoSize = True
-        Me.RbtCheckEmailList.Location = New System.Drawing.Point(4, 48)
-        Me.RbtCheckEmailList.Margin = New System.Windows.Forms.Padding(2)
+        Me.RbtCheckEmailList.Location = New System.Drawing.Point(5, 59)
+        Me.RbtCheckEmailList.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.RbtCheckEmailList.Name = "RbtCheckEmailList"
-        Me.RbtCheckEmailList.Size = New System.Drawing.Size(138, 17)
+        Me.RbtCheckEmailList.Size = New System.Drawing.Size(179, 21)
         Me.RbtCheckEmailList.TabIndex = 2
         Me.RbtCheckEmailList.Text = "Check Email list text file:"
         Me.RbtCheckEmailList.UseVisualStyleBackColor = True
@@ -411,11 +427,11 @@ Partial Class MainForm
         Me.GrbQuerySource.Controls.Add(Me.ChkHackedEmails)
         Me.GrbQuerySource.Controls.Add(Me.LblHaveIBeenPwned)
         Me.GrbQuerySource.Controls.Add(Me.ChkHaveIBeenPwned)
-        Me.GrbQuerySource.Location = New System.Drawing.Point(659, 55)
-        Me.GrbQuerySource.Margin = New System.Windows.Forms.Padding(2)
+        Me.GrbQuerySource.Location = New System.Drawing.Point(879, 68)
+        Me.GrbQuerySource.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.GrbQuerySource.Name = "GrbQuerySource"
-        Me.GrbQuerySource.Padding = New System.Windows.Forms.Padding(2)
-        Me.GrbQuerySource.Size = New System.Drawing.Size(215, 84)
+        Me.GrbQuerySource.Padding = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.GrbQuerySource.Size = New System.Drawing.Size(287, 103)
         Me.GrbQuerySource.TabIndex = 6
         Me.GrbQuerySource.TabStop = False
         Me.GrbQuerySource.Text = "Query source"
@@ -423,10 +439,9 @@ Partial Class MainForm
         'LblHackedEmails
         '
         Me.LblHackedEmails.AutoSize = True
-        Me.LblHackedEmails.Location = New System.Drawing.Point(22, 36)
-        Me.LblHackedEmails.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.LblHackedEmails.Location = New System.Drawing.Point(29, 44)
         Me.LblHackedEmails.Name = "LblHackedEmails"
-        Me.LblHackedEmails.Size = New System.Drawing.Size(141, 13)
+        Me.LblHackedEmails.Size = New System.Drawing.Size(186, 17)
         Me.LblHackedEmails.TabIndex = 3
         Me.LblHackedEmails.TabStop = True
         Me.LblHackedEmails.Text = "Has my email been hacked?"
@@ -436,20 +451,19 @@ Partial Class MainForm
         Me.ChkHackedEmails.AutoSize = True
         Me.ChkHackedEmails.Checked = True
         Me.ChkHackedEmails.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.ChkHackedEmails.Location = New System.Drawing.Point(4, 37)
-        Me.ChkHackedEmails.Margin = New System.Windows.Forms.Padding(2)
+        Me.ChkHackedEmails.Location = New System.Drawing.Point(5, 46)
+        Me.ChkHackedEmails.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.ChkHackedEmails.Name = "ChkHackedEmails"
-        Me.ChkHackedEmails.Size = New System.Drawing.Size(15, 14)
+        Me.ChkHackedEmails.Size = New System.Drawing.Size(18, 17)
         Me.ChkHackedEmails.TabIndex = 2
         Me.ChkHackedEmails.UseVisualStyleBackColor = True
         '
         'LblHaveIBeenPwned
         '
         Me.LblHaveIBeenPwned.AutoSize = True
-        Me.LblHaveIBeenPwned.Location = New System.Drawing.Point(22, 18)
-        Me.LblHaveIBeenPwned.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.LblHaveIBeenPwned.Location = New System.Drawing.Point(29, 22)
         Me.LblHaveIBeenPwned.Name = "LblHaveIBeenPwned"
-        Me.LblHaveIBeenPwned.Size = New System.Drawing.Size(109, 13)
+        Me.LblHaveIBeenPwned.Size = New System.Drawing.Size(139, 17)
         Me.LblHaveIBeenPwned.TabIndex = 1
         Me.LblHaveIBeenPwned.TabStop = True
         Me.LblHaveIBeenPwned.Text = "Have I Been Pwned?"
@@ -459,29 +473,31 @@ Partial Class MainForm
         Me.ChkHaveIBeenPwned.AutoSize = True
         Me.ChkHaveIBeenPwned.Checked = True
         Me.ChkHaveIBeenPwned.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.ChkHaveIBeenPwned.Location = New System.Drawing.Point(4, 19)
-        Me.ChkHaveIBeenPwned.Margin = New System.Windows.Forms.Padding(2)
+        Me.ChkHaveIBeenPwned.Location = New System.Drawing.Point(5, 23)
+        Me.ChkHaveIBeenPwned.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.ChkHaveIBeenPwned.Name = "ChkHaveIBeenPwned"
-        Me.ChkHaveIBeenPwned.Size = New System.Drawing.Size(15, 14)
+        Me.ChkHaveIBeenPwned.Size = New System.Drawing.Size(18, 17)
         Me.ChkHaveIBeenPwned.TabIndex = 0
         Me.ChkHaveIBeenPwned.UseVisualStyleBackColor = True
         '
         'NudCacheTTL
         '
-        Me.NudCacheTTL.Location = New System.Drawing.Point(234, 18)
+        Me.NudCacheTTL.Location = New System.Drawing.Point(312, 22)
+        Me.NudCacheTTL.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.NudCacheTTL.Maximum = New Decimal(New Integer() {720, 0, 0, 0})
         Me.NudCacheTTL.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.NudCacheTTL.Name = "NudCacheTTL"
-        Me.NudCacheTTL.Size = New System.Drawing.Size(40, 20)
+        Me.NudCacheTTL.Size = New System.Drawing.Size(53, 22)
         Me.NudCacheTTL.TabIndex = 6
         Me.NudCacheTTL.Value = New Decimal(New Integer() {48, 0, 0, 0})
         '
         'LblCacheTTL
         '
         Me.LblCacheTTL.AutoSize = True
-        Me.LblCacheTTL.Location = New System.Drawing.Point(104, 20)
+        Me.LblCacheTTL.Location = New System.Drawing.Point(139, 25)
+        Me.LblCacheTTL.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.LblCacheTTL.Name = "LblCacheTTL"
-        Me.LblCacheTTL.Size = New System.Drawing.Size(124, 13)
+        Me.LblCacheTTL.Size = New System.Drawing.Size(167, 17)
         Me.LblCacheTTL.TabIndex = 5
         Me.LblCacheTTL.Text = "Cache expiration (hours):"
         '
@@ -490,9 +506,10 @@ Partial Class MainForm
         Me.ChkEnableCache.AutoSize = True
         Me.ChkEnableCache.Checked = True
         Me.ChkEnableCache.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.ChkEnableCache.Location = New System.Drawing.Point(6, 19)
+        Me.ChkEnableCache.Location = New System.Drawing.Point(8, 23)
+        Me.ChkEnableCache.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.ChkEnableCache.Name = "ChkEnableCache"
-        Me.ChkEnableCache.Size = New System.Drawing.Size(92, 17)
+        Me.ChkEnableCache.Size = New System.Drawing.Size(116, 21)
         Me.ChkEnableCache.TabIndex = 4
         Me.ChkEnableCache.Text = "Enable cache"
         Me.ChkEnableCache.UseVisualStyleBackColor = True
@@ -502,11 +519,11 @@ Partial Class MainForm
         Me.TxtOutput.BackColor = System.Drawing.Color.White
         Me.TxtOutput.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TxtOutput.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TxtOutput.Location = New System.Drawing.Point(2, 15)
-        Me.TxtOutput.Margin = New System.Windows.Forms.Padding(4)
+        Me.TxtOutput.Location = New System.Drawing.Point(3, 17)
+        Me.TxtOutput.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
         Me.TxtOutput.Name = "TxtOutput"
         Me.TxtOutput.ReadOnly = True
-        Me.TxtOutput.Size = New System.Drawing.Size(862, 76)
+        Me.TxtOutput.Size = New System.Drawing.Size(1149, 96)
         Me.TxtOutput.TabIndex = 7
         Me.TxtOutput.Text = ""
         '
@@ -515,8 +532,8 @@ Partial Class MainForm
         Me.SplitContainer1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.SplitContainer1.Location = New System.Drawing.Point(9, 207)
-        Me.SplitContainer1.Margin = New System.Windows.Forms.Padding(2)
+        Me.SplitContainer1.Location = New System.Drawing.Point(12, 255)
+        Me.SplitContainer1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.SplitContainer1.Name = "SplitContainer1"
         Me.SplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
         '
@@ -527,9 +544,8 @@ Partial Class MainForm
         'SplitContainer1.Panel2
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.GrbOutput)
-        Me.SplitContainer1.Size = New System.Drawing.Size(866, 332)
-        Me.SplitContainer1.SplitterDistance = 236
-        Me.SplitContainer1.SplitterWidth = 3
+        Me.SplitContainer1.Size = New System.Drawing.Size(1155, 409)
+        Me.SplitContainer1.SplitterDistance = 290
         Me.SplitContainer1.TabIndex = 8
         '
         'GrbOutput
@@ -537,10 +553,10 @@ Partial Class MainForm
         Me.GrbOutput.Controls.Add(Me.TxtOutput)
         Me.GrbOutput.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GrbOutput.Location = New System.Drawing.Point(0, 0)
-        Me.GrbOutput.Margin = New System.Windows.Forms.Padding(2)
+        Me.GrbOutput.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.GrbOutput.Name = "GrbOutput"
-        Me.GrbOutput.Padding = New System.Windows.Forms.Padding(2)
-        Me.GrbOutput.Size = New System.Drawing.Size(866, 93)
+        Me.GrbOutput.Padding = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.GrbOutput.Size = New System.Drawing.Size(1155, 115)
         Me.GrbOutput.TabIndex = 8
         Me.GrbOutput.TabStop = False
         Me.GrbOutput.Text = "Output"
@@ -564,9 +580,11 @@ Partial Class MainForm
         Me.GrbQueryOptions.Controls.Add(Me.NudCacheTTL)
         Me.GrbQueryOptions.Controls.Add(Me.ChkEnableCache)
         Me.GrbQueryOptions.Controls.Add(Me.LblCacheTTL)
-        Me.GrbQueryOptions.Location = New System.Drawing.Point(9, 144)
+        Me.GrbQueryOptions.Location = New System.Drawing.Point(12, 177)
+        Me.GrbQueryOptions.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.GrbQueryOptions.Name = "GrbQueryOptions"
-        Me.GrbQueryOptions.Size = New System.Drawing.Size(865, 58)
+        Me.GrbQueryOptions.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.GrbQueryOptions.Size = New System.Drawing.Size(1153, 71)
         Me.GrbQueryOptions.TabIndex = 9
         Me.GrbQueryOptions.TabStop = False
         Me.GrbQueryOptions.Text = "Query options"
@@ -574,10 +592,11 @@ Partial Class MainForm
         'NudSourceRequestDelay
         '
         Me.NudSourceRequestDelay.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.NudSourceRequestDelay.Location = New System.Drawing.Point(806, 18)
+        Me.NudSourceRequestDelay.Location = New System.Drawing.Point(1075, 22)
+        Me.NudSourceRequestDelay.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.NudSourceRequestDelay.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
         Me.NudSourceRequestDelay.Name = "NudSourceRequestDelay"
-        Me.NudSourceRequestDelay.Size = New System.Drawing.Size(53, 20)
+        Me.NudSourceRequestDelay.Size = New System.Drawing.Size(71, 22)
         Me.NudSourceRequestDelay.TabIndex = 8
         Me.NudSourceRequestDelay.Value = New Decimal(New Integer() {2000, 0, 0, 0})
         '
@@ -585,9 +604,10 @@ Partial Class MainForm
         '
         Me.Lbl.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Lbl.AutoSize = True
-        Me.Lbl.Location = New System.Drawing.Point(530, 20)
+        Me.Lbl.Location = New System.Drawing.Point(707, 25)
+        Me.Lbl.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Lbl.Name = "Lbl"
-        Me.Lbl.Size = New System.Drawing.Size(270, 13)
+        Me.Lbl.Size = New System.Drawing.Size(363, 17)
         Me.Lbl.TabIndex = 7
         Me.Lbl.Text = "Delay between requests on  same source (milliseconds):"
         '
@@ -606,29 +626,24 @@ Partial Class MainForm
         Me.DataGridViewImageColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
         Me.DataGridViewImageColumn2.Width = 32
         '
-        'mniFile
+        'CmnGridResult
         '
-        Me.mniFile.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tssFile1, Me.mniFileExit})
-        Me.mniFile.Name = "mniFile"
-        Me.mniFile.Size = New System.Drawing.Size(37, 20)
-        Me.mniFile.Text = "&File"
+        Me.CmnGridResult.ImageScalingSize = New System.Drawing.Size(20, 20)
+        Me.CmnGridResult.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1})
+        Me.CmnGridResult.Name = "CmnGridResult"
+        Me.CmnGridResult.Size = New System.Drawing.Size(119, 30)
         '
-        'tssFile1
+        'ToolStripMenuItem1
         '
-        Me.tssFile1.Name = "tssFile1"
-        Me.tssFile1.Size = New System.Drawing.Size(149, 6)
-        '
-        'mniFileExit
-        '
-        Me.mniFileExit.Name = "mniFileExit"
-        Me.mniFileExit.Size = New System.Drawing.Size(152, 22)
-        Me.mniFileExit.Text = "E&xit"
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(118, 26)
+        Me.ToolStripMenuItem1.Text = "Copy"
         '
         'MainForm
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(884, 561)
+        Me.ClientSize = New System.Drawing.Size(1179, 690)
         Me.Controls.Add(Me.GrbQueryOptions)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.GrbQuerySource)
@@ -637,7 +652,7 @@ Partial Class MainForm
         Me.Controls.Add(Me.TlsMain)
         Me.Controls.Add(Me.MnuMain)
         Me.MainMenuStrip = Me.MnuMain
-        Me.Margin = New System.Windows.Forms.Padding(2)
+        Me.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Name = "MainForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MainForm"
@@ -664,6 +679,7 @@ Partial Class MainForm
         Me.GrbQueryOptions.ResumeLayout(False)
         Me.GrbQueryOptions.PerformLayout()
         CType(Me.NudSourceRequestDelay, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.CmnGridResult.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -720,6 +736,7 @@ Partial Class MainForm
     Friend WithEvents colResultLastDataLeakDate As DataGridViewTextBoxColumn
     Friend WithEvents colResultLastDataLeakPublicationDate As DataGridViewTextBoxColumn
     Friend WithEvents mniFile As ToolStripMenuItem
-    Friend WithEvents tssFile1 As ToolStripSeparator
     Friend WithEvents mniFileExit As ToolStripMenuItem
+    Friend WithEvents CmnGridResult As ContextMenuStrip
+    Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
 End Class
