@@ -23,9 +23,9 @@ Partial Class MainForm
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Me.RbtCheckSingleEmail = New System.Windows.Forms.RadioButton()
         Me.TxtEmail = New System.Windows.Forms.TextBox()
         Me.MnuMain = New System.Windows.Forms.MenuStrip()
@@ -42,13 +42,23 @@ Partial Class MainForm
         Me.BtnExecute = New System.Windows.Forms.ToolStripButton()
         Me.BtnStop = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.BtnCopyCell = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.BtnClearCache = New System.Windows.Forms.ToolStripButton()
         Me.StsMain = New System.Windows.Forms.StatusStrip()
         Me.LblStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.GrbQueryResult = New System.Windows.Forms.GroupBox()
         Me.GrdResult = New System.Windows.Forms.DataGridView()
+        Me.colResultImage = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.colResultEmail = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colResultHaveIBeenPwned = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colResultHackedEmails = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colResultLastDataLeakDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colResultLastDataLeakPublicationDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GridResultBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.DstResultSchema = New HackedEmailsChecker.ResultSchema()
+        Me.CmnGridResult = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.CmiGridResultCopy = New System.Windows.Forms.ToolStripMenuItem()
         Me.BkwQuery = New System.ComponentModel.BackgroundWorker()
         Me.GrbQueryType = New System.Windows.Forms.GroupBox()
         Me.BtnBrowseEmailListFile = New System.Windows.Forms.Button()
@@ -71,14 +81,8 @@ Partial Class MainForm
         Me.Lbl = New System.Windows.Forms.Label()
         Me.OfdEmailList = New System.Windows.Forms.OpenFileDialog()
         Me.DataGridViewImageColumn2 = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.CmnGridResult = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.colResultImage = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.colResultEmail = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colResultHaveIBeenPwned = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colResultHackedEmails = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colResultLastDataLeakDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colResultLastDataLeakPublicationDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MniEdit = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MniEditCopy = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuMain.SuspendLayout()
         Me.TlsMain.SuspendLayout()
         Me.StsMain.SuspendLayout()
@@ -86,6 +90,7 @@ Partial Class MainForm
         CType(Me.GrdResult, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridResultBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DstResultSchema, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.CmnGridResult.SuspendLayout()
         Me.GrbQueryType.SuspendLayout()
         Me.GrbQuerySource.SuspendLayout()
         CType(Me.NudCacheTTL, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -96,7 +101,6 @@ Partial Class MainForm
         Me.GrbOutput.SuspendLayout()
         Me.GrbQueryOptions.SuspendLayout()
         CType(Me.NudSourceRequestDelay, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.CmnGridResult.SuspendLayout()
         Me.SuspendLayout()
         '
         'RbtCheckSingleEmail
@@ -125,7 +129,7 @@ Partial Class MainForm
         'MnuMain
         '
         Me.MnuMain.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.MnuMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MniFile, Me.MniActions, Me.MniCache, Me.MniHelp})
+        Me.MnuMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MniFile, Me.MniEdit, Me.MniActions, Me.MniCache, Me.MniHelp})
         Me.MnuMain.Location = New System.Drawing.Point(0, 0)
         Me.MnuMain.Name = "MnuMain"
         Me.MnuMain.Padding = New System.Windows.Forms.Padding(4, 2, 0, 2)
@@ -143,7 +147,7 @@ Partial Class MainForm
         'MniFileExit
         '
         Me.MniFileExit.Name = "MniFileExit"
-        Me.MniFileExit.Size = New System.Drawing.Size(92, 22)
+        Me.MniFileExit.Size = New System.Drawing.Size(152, 22)
         Me.MniFileExit.Text = "E&xit"
         '
         'MniActions
@@ -180,6 +184,7 @@ Partial Class MainForm
         'MniClearCache
         '
         Me.MniClearCache.Image = CType(resources.GetObject("MniClearCache.Image"), System.Drawing.Image)
+        Me.MniClearCache.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.MniClearCache.Name = "MniClearCache"
         Me.MniClearCache.Size = New System.Drawing.Size(135, 22)
         Me.MniClearCache.Text = "&Clear cache"
@@ -200,7 +205,7 @@ Partial Class MainForm
         'TlsMain
         '
         Me.TlsMain.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.TlsMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnExecute, Me.BtnStop, Me.ToolStripSeparator1, Me.BtnClearCache})
+        Me.TlsMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnExecute, Me.BtnStop, Me.ToolStripSeparator1, Me.BtnCopyCell, Me.ToolStripSeparator2, Me.BtnClearCache})
         Me.TlsMain.Location = New System.Drawing.Point(0, 24)
         Me.TlsMain.Name = "TlsMain"
         Me.TlsMain.Size = New System.Drawing.Size(884, 27)
@@ -231,6 +236,21 @@ Partial Class MainForm
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
         Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 27)
+        '
+        'BtnCopyCell
+        '
+        Me.BtnCopyCell.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnCopyCell.Enabled = False
+        Me.BtnCopyCell.Image = CType(resources.GetObject("BtnCopyCell.Image"), System.Drawing.Image)
+        Me.BtnCopyCell.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnCopyCell.Name = "BtnCopyCell"
+        Me.BtnCopyCell.Size = New System.Drawing.Size(24, 24)
+        Me.BtnCopyCell.Text = "Copy cell value in Clipboard"
+        '
+        'ToolStripSeparator2
+        '
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 27)
         '
         'BtnClearCache
         '
@@ -288,6 +308,66 @@ Partial Class MainForm
         Me.GrdResult.Size = New System.Drawing.Size(862, 218)
         Me.GrdResult.TabIndex = 0
         '
+        'colResultImage
+        '
+        Me.colResultImage.HeaderText = ""
+        Me.colResultImage.Name = "colResultImage"
+        Me.colResultImage.ReadOnly = True
+        Me.colResultImage.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.colResultImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.colResultImage.Width = 32
+        '
+        'colResultEmail
+        '
+        Me.colResultEmail.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.colResultEmail.DataPropertyName = "Email"
+        Me.colResultEmail.HeaderText = "Email"
+        Me.colResultEmail.Name = "colResultEmail"
+        Me.colResultEmail.ReadOnly = True
+        Me.colResultEmail.Width = 57
+        '
+        'colResultHaveIBeenPwned
+        '
+        Me.colResultHaveIBeenPwned.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.colResultHaveIBeenPwned.HeaderText = "Have I Been Pwned"
+        Me.colResultHaveIBeenPwned.Name = "colResultHaveIBeenPwned"
+        Me.colResultHaveIBeenPwned.ReadOnly = True
+        Me.colResultHaveIBeenPwned.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.colResultHaveIBeenPwned.Width = 109
+        '
+        'colResultHackedEmails
+        '
+        Me.colResultHackedEmails.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.colResultHackedEmails.HeaderText = "Has my email been hacked?"
+        Me.colResultHackedEmails.Name = "colResultHackedEmails"
+        Me.colResultHackedEmails.ReadOnly = True
+        Me.colResultHackedEmails.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.colResultHackedEmails.Width = 147
+        '
+        'colResultLastDataLeakDate
+        '
+        Me.colResultLastDataLeakDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.colResultLastDataLeakDate.DataPropertyName = "LastDataLeakDate"
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.colResultLastDataLeakDate.DefaultCellStyle = DataGridViewCellStyle1
+        Me.colResultLastDataLeakDate.HeaderText = "Last data leak"
+        Me.colResultLastDataLeakDate.Name = "colResultLastDataLeakDate"
+        Me.colResultLastDataLeakDate.ReadOnly = True
+        Me.colResultLastDataLeakDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.colResultLastDataLeakDate.Width = 80
+        '
+        'colResultLastDataLeakPublicationDate
+        '
+        Me.colResultLastDataLeakPublicationDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.colResultLastDataLeakPublicationDate.DataPropertyName = "LastDataLeakPublicationDate"
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.colResultLastDataLeakPublicationDate.DefaultCellStyle = DataGridViewCellStyle2
+        Me.colResultLastDataLeakPublicationDate.HeaderText = "Last data leak publication"
+        Me.colResultLastDataLeakPublicationDate.Name = "colResultLastDataLeakPublicationDate"
+        Me.colResultLastDataLeakPublicationDate.ReadOnly = True
+        Me.colResultLastDataLeakPublicationDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.colResultLastDataLeakPublicationDate.Width = 134
+        '
         'GridResultBindingSource
         '
         Me.GridResultBindingSource.AllowNew = False
@@ -299,6 +379,20 @@ Partial Class MainForm
         '
         Me.DstResultSchema.DataSetName = "ResultSchema"
         Me.DstResultSchema.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
+        'CmnGridResult
+        '
+        Me.CmnGridResult.ImageScalingSize = New System.Drawing.Size(20, 20)
+        Me.CmnGridResult.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CmiGridResultCopy})
+        Me.CmnGridResult.Name = "CmnGridResult"
+        Me.CmnGridResult.Size = New System.Drawing.Size(107, 30)
+        '
+        'CmiGridResultCopy
+        '
+        Me.CmiGridResultCopy.Image = CType(resources.GetObject("CmiGridResultCopy.Image"), System.Drawing.Image)
+        Me.CmiGridResultCopy.Name = "CmiGridResultCopy"
+        Me.CmiGridResultCopy.Size = New System.Drawing.Size(106, 26)
+        Me.CmiGridResultCopy.Text = "Copy"
         '
         'BkwQuery
         '
@@ -559,78 +653,20 @@ Partial Class MainForm
         Me.DataGridViewImageColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
         Me.DataGridViewImageColumn2.Width = 32
         '
-        'CmnGridResult
+        'MniEdit
         '
-        Me.CmnGridResult.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.CmnGridResult.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1})
-        Me.CmnGridResult.Name = "CmnGridResult"
-        Me.CmnGridResult.Size = New System.Drawing.Size(103, 26)
+        Me.MniEdit.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MniEditCopy})
+        Me.MniEdit.Name = "MniEdit"
+        Me.MniEdit.Size = New System.Drawing.Size(39, 20)
+        Me.MniEdit.Text = "&Edit"
         '
-        'ToolStripMenuItem1
+        'MniEditCopy
         '
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(102, 22)
-        Me.ToolStripMenuItem1.Text = "Copy"
-        '
-        'colResultImage
-        '
-        Me.colResultImage.HeaderText = ""
-        Me.colResultImage.Name = "colResultImage"
-        Me.colResultImage.ReadOnly = True
-        Me.colResultImage.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.colResultImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.colResultImage.Width = 32
-        '
-        'colResultEmail
-        '
-        Me.colResultEmail.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.colResultEmail.DataPropertyName = "Email"
-        Me.colResultEmail.HeaderText = "Email"
-        Me.colResultEmail.Name = "colResultEmail"
-        Me.colResultEmail.ReadOnly = True
-        Me.colResultEmail.Width = 57
-        '
-        'colResultHaveIBeenPwned
-        '
-        Me.colResultHaveIBeenPwned.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.colResultHaveIBeenPwned.HeaderText = "Have I Been Pwned"
-        Me.colResultHaveIBeenPwned.Name = "colResultHaveIBeenPwned"
-        Me.colResultHaveIBeenPwned.ReadOnly = True
-        Me.colResultHaveIBeenPwned.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.colResultHaveIBeenPwned.Width = 109
-        '
-        'colResultHackedEmails
-        '
-        Me.colResultHackedEmails.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.colResultHackedEmails.HeaderText = "Has my email been hacked?"
-        Me.colResultHackedEmails.Name = "colResultHackedEmails"
-        Me.colResultHackedEmails.ReadOnly = True
-        Me.colResultHackedEmails.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.colResultHackedEmails.Width = 147
-        '
-        'colResultLastDataLeakDate
-        '
-        Me.colResultLastDataLeakDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.colResultLastDataLeakDate.DataPropertyName = "LastDataLeakDate"
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.colResultLastDataLeakDate.DefaultCellStyle = DataGridViewCellStyle1
-        Me.colResultLastDataLeakDate.HeaderText = "Last data leak"
-        Me.colResultLastDataLeakDate.Name = "colResultLastDataLeakDate"
-        Me.colResultLastDataLeakDate.ReadOnly = True
-        Me.colResultLastDataLeakDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.colResultLastDataLeakDate.Width = 80
-        '
-        'colResultLastDataLeakPublicationDate
-        '
-        Me.colResultLastDataLeakPublicationDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.colResultLastDataLeakPublicationDate.DataPropertyName = "LastDataLeakPublicationDate"
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.colResultLastDataLeakPublicationDate.DefaultCellStyle = DataGridViewCellStyle2
-        Me.colResultLastDataLeakPublicationDate.HeaderText = "Last data leak publication"
-        Me.colResultLastDataLeakPublicationDate.Name = "colResultLastDataLeakPublicationDate"
-        Me.colResultLastDataLeakPublicationDate.ReadOnly = True
-        Me.colResultLastDataLeakPublicationDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.colResultLastDataLeakPublicationDate.Width = 134
+        Me.MniEditCopy.Enabled = False
+        Me.MniEditCopy.Image = CType(resources.GetObject("MniEditCopy.Image"), System.Drawing.Image)
+        Me.MniEditCopy.Name = "MniEditCopy"
+        Me.MniEditCopy.Size = New System.Drawing.Size(156, 26)
+        Me.MniEditCopy.Text = "&Copy"
         '
         'MainForm
         '
@@ -659,6 +695,7 @@ Partial Class MainForm
         CType(Me.GrdResult, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridResultBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DstResultSchema, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.CmnGridResult.ResumeLayout(False)
         Me.GrbQueryType.ResumeLayout(False)
         Me.GrbQueryType.PerformLayout()
         Me.GrbQuerySource.ResumeLayout(False)
@@ -672,7 +709,6 @@ Partial Class MainForm
         Me.GrbQueryOptions.ResumeLayout(False)
         Me.GrbQueryOptions.PerformLayout()
         CType(Me.NudSourceRequestDelay, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.CmnGridResult.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -725,11 +761,15 @@ Partial Class MainForm
     Friend WithEvents MniFile As ToolStripMenuItem
     Friend WithEvents MniFileExit As ToolStripMenuItem
     Friend WithEvents CmnGridResult As ContextMenuStrip
-    Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents CmiGridResultCopy As ToolStripMenuItem
     Friend WithEvents colResultImage As DataGridViewImageColumn
     Friend WithEvents colResultEmail As DataGridViewTextBoxColumn
     Friend WithEvents colResultHaveIBeenPwned As DataGridViewTextBoxColumn
     Friend WithEvents colResultHackedEmails As DataGridViewTextBoxColumn
     Friend WithEvents colResultLastDataLeakDate As DataGridViewTextBoxColumn
     Friend WithEvents colResultLastDataLeakPublicationDate As DataGridViewTextBoxColumn
+    Friend WithEvents BtnCopyCell As ToolStripButton
+    Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
+    Friend WithEvents MniEdit As ToolStripMenuItem
+    Friend WithEvents MniEditCopy As ToolStripMenuItem
 End Class

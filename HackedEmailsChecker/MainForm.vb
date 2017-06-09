@@ -31,6 +31,20 @@
     End Sub
 #End Region
 
+#Region "Menu Edit"
+    Private Sub MniEditCopy_Click(sender As Object, e As EventArgs) Handles MniEditCopy.Click
+        Try
+            Clipboard.SetText(Me.GrdResult.SelectedCells(0).Value.ToString())
+        Catch ex As Exception
+            UtilMsgBox.ShowErrorException("Error during show Grid result Contex Menu", ex, False)
+        End Try
+    End Sub
+
+    Private Sub BtnCopyCell_Click(sender As Object, e As EventArgs) Handles BtnCopyCell.Click
+        Me.MniEditCopy.PerformClick()
+    End Sub
+#End Region
+
 #Region "Menu Actions"
     Private QueryRunnig As Boolean = False
     Private QueryException As System.Exception = Nothing
@@ -299,7 +313,6 @@
 #Region "Query Result controls"
     Private Sub GrdResult_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles GrdResult.DataError
         Me.AddOutput(OutputTypes.Error, String.Format("Error in Grid result (Row {0} - Column {1}) " & e.Exception.Message, e.RowIndex, e.ColumnIndex))
-
     End Sub
 
     Private Sub GrdResult_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles GrdResult.CellFormatting
@@ -338,28 +351,6 @@
                     e.FormattingApplied = True
                     e.CellStyle.ForeColor = System.Drawing.Color.Red
                 End If
-
-
-
-
-                'ElseIf e.ColumnIndex = Me.colResultHackedEmails.Index Then
-                '    Dim resultRow = DirectCast(DirectCast(Me.GridResultBindingSource.List(e.RowIndex), System.Data.DataRowView).Row, ResultSchema.GridResultRow)
-
-                'If System.Convert.ToInt64(e.Value) = 0 Then
-                '    e.Value = "Not found"
-                '    e.CellStyle.ForeColor = System.Drawing.Color.Green
-                'Else
-                '    e.Value = String.Format("Found {0} leaks", System.Convert.ToInt64(e.Value))
-                '    e.CellStyle.ForeColor = System.Drawing.Color.Red
-                'End If
-
-                'e.FormattingApplied = True
-
-                'If resultRow.DataLeakFound Then
-                '        e.CellStyle.ForeColor = System.Drawing.Color.Red
-                '    Else
-                '        e.CellStyle.ForeColor = System.Drawing.Color.Green
-                '    End If
             ElseIf e.ColumnIndex = Me.colResultLastDataLeakDate.Index OrElse
                     e.ColumnIndex = Me.colResultLastDataLeakPublicationDate.Index Then
                 If e.Value IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(e.Value.ToString()) Then
@@ -385,18 +376,10 @@
 
         If result.Found Then row.DataLeakFound = True
 
-        'Set Result Leaks
-        'Dim resultDetail As String = String.Empty
-        'If result.Found Then
-        '    resultDetail = String.Format("Found {0} leaks", result.Items.Count)
-        'Else
-        '    resultDetail = "Not found"
-        'End If
-
-        Dim resultDetailColumn = (From c In row.Table.Columns Where DirectCast(c, System.Data.DataColumn).ColumnName = result.Database.ToString()).SingleOrDefault()
-        If resultDetailColumn IsNot Nothing Then
-            'row(DirectCast(resultDetailColumn, System.Data.DataColumn)) = resultDetail
-            row(DirectCast(resultDetailColumn, System.Data.DataColumn)) = result.Items.Count
+        'Set Result Data Leaks count
+        Dim resultDataLeakCountColumn = (From c In row.Table.Columns Where DirectCast(c, System.Data.DataColumn).ColumnName = result.Database.ToString()).SingleOrDefault()
+        If resultDataLeakCountColumn IsNot Nothing Then
+            row(DirectCast(resultDataLeakCountColumn, System.Data.DataColumn)) = result.Items.Count
         End If
 
         'Set Last data leak date
@@ -406,7 +389,6 @@
             End If
         End If
 
-
         'Set Last data leak publication date
         If result.Found AndAlso result.LastDataLeakPublished.DataLeakDate.HasValue Then
             If row.IsLastDataLeakPublicationDateNull() OrElse row.LastDataLeakPublicationDate < result.LastDataLeakPublished.DataLeakDate.Value Then
@@ -414,26 +396,36 @@
             End If
         End If
 
-
-
-
-
         Me.DstResultSchema.GridResult.AcceptChanges()
     End Sub
 #End Region
 
-    '#Region "Context Menu Grid Result"
-    'https://msdn.microsoft.com/it-it/library/system.windows.forms.datagridview.clipboardcopymode(v=vs.110).aspx
-    '    Private Sub GrdResult_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles GrdResult.CellMouseClick
-    '        'Dim hitTest = Me.GrdResult.HitTest(e.X, e.Y)
-    '        ''hitTest.Type=
-    '        If e.Button = MouseButtons.Right AndAlso e.RowIndex >= 0 Then
-    '            If Me.GrdResult.ContextMenuStrip Is Nothing Then Me.GrdResult.ContextMenuStrip = Me.CmnGridResult
-    '        Else
-    '            If Me.GrdResult.ContextMenuStrip IsNot Nothing Then Me.GrdResult.ContextMenuStrip = Nothing
-    '        End If
-    '    End Sub
-    '#End Region
+#Region "Context Menu Grid Result"
+    Private Sub GrdResult_SelectionChanged(sender As Object, e As EventArgs) Handles GrdResult.SelectionChanged
+        Me.MniEditCopy.Enabled = Me.GrdResult.SelectedCells.Count = 1 AndAlso Me.GrdResult.SelectedCells(0).ColumnIndex = Me.colResultEmail.Index
+        Me.BtnCopyCell.Enabled = Me.MniEditCopy.Enabled
+    End Sub
+
+    Private Sub GrdResult_MouseDown(sender As Object, e As MouseEventArgs) Handles GrdResult.MouseDown
+        Try
+            If e.Button = System.Windows.Forms.MouseButtons.Right Then
+                Dim hitTestInfo = Me.GrdResult.HitTest(e.X, e.Y)
+
+                If hitTestInfo IsNot Nothing AndAlso hitTestInfo.Type = DataGridViewHitTestType.Cell AndAlso hitTestInfo.ColumnIndex = Me.colResultEmail.Index Then
+                    Me.GrdResult.ClearSelection()
+                    Me.GrdResult(hitTestInfo.ColumnIndex, hitTestInfo.RowIndex).Selected = True
+                    Me.CmnGridResult.Show(Me.GrdResult, New Point(e.X, e.Y))
+                End If
+            End If
+        Catch ex As Exception
+            UtilMsgBox.ShowErrorException("Error during show Grid result Contex Menu", ex, False)
+        End Try
+    End Sub
+
+    Private Sub CmnGridResult_Click(sender As Object, e As EventArgs) Handles CmnGridResult.Click
+        Me.MniEditCopy.PerformClick()
+    End Sub
+#End Region
 
 #Region "Gestione Output"
     Private Enum OutputTypes As Integer
