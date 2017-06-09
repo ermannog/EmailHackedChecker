@@ -20,8 +20,8 @@
         Me.FormInitializing = False
 
         '*** Test ***
-        Me.TxtEmail.Text = "test@example.com"
-        Me.TxtEmailListFilePath.Text = "EmailList.txt"
+        'Me.TxtEmail.Text = "test@example.com"
+        'Me.TxtEmailListFilePath.Text = "EmailList.txt"
     End Sub
 
 #Region "Menu File"
