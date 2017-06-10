@@ -330,6 +330,7 @@
 #End Region
 
 #Region "Query Result controls"
+
     Private Sub GrdResult_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles GrdResult.DataError
         Me.AddOutput(OutputTypes.Error, String.Format("Error in Grid result (Row {0} - Column {1}) " & e.Exception.Message, e.RowIndex, e.ColumnIndex))
     End Sub
@@ -417,6 +418,22 @@
 
         Me.DstResultSchema.GridResult.AcceptChanges()
     End Sub
+
+    Private Sub ChkShowOnlyDataLeakEmails_CheckedChanged(sender As Object, e As EventArgs) Handles ChkShowOnlyDataLeakEmails.CheckedChanged
+        If Not Me.FormInitializing Then Me.SetGridResultBindingSourceFilter()
+    End Sub
+
+    Private Sub SetGridResultBindingSourceFilter()
+        If Me.ChkShowOnlyDataLeakEmails.Checked Then
+            Me.GridResultBindingSource.Filter = "DataLeakFound=True"
+        Else
+            Me.GridResultBindingSource.Filter = Nothing
+        End If
+    End Sub
+
+    Private Sub GridResultBindingSource_ListChanged(sender As Object, e As System.ComponentModel.ListChangedEventArgs) Handles GridResultBindingSource.ListChanged
+        Me.BtnExportGridResultsToFile.Enabled = Me.GridResultBindingSource.Count > 0
+    End Sub
 #End Region
 
 #Region "Query Result Grid Context Menu"
@@ -446,7 +463,7 @@
     End Sub
 #End Region
 
-#Region "Gestione Output"
+#Region "Query Output controls"
     Private Enum OutputTypes As Integer
         Information
         ResultEmailFound
@@ -487,19 +504,39 @@
 
         If UtilLogFileWriter.LogEnabled Then UtilLogFileWriter.WriteNewEntry(logEntryType, text.TrimNewLine())
     End Sub
-
-    Private Sub ChkShowOnlyDataLeakEmails_CheckedChanged(sender As Object, e As EventArgs) Handles ChkShowOnlyDataLeakEmails.CheckedChanged
-        If Not Me.FormInitializing Then Me.SetGridResultBindingSourceFilter()
-    End Sub
-
-    Private Sub SetGridResultBindingSourceFilter()
-        If Me.ChkShowOnlyDataLeakEmails.Checked Then
-            Me.GridResultBindingSource.Filter = "DataLeakFound=True"
-        Else
-            Me.GridResultBindingSource.Filter = Nothing
-        End If
-    End Sub
-
 #End Region
+
+    Private Sub BtnExportGridResultsToFile_Click(sender As Object, e As EventArgs) Handles BtnExportGridResultsToFile.Click
+        Try
+            Me.SfdGridResult.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            Me.SfdGridResult.FileName = My.Application.Info.AssemblyName & "-Results-" & Now.ToString("yyyyMMdd") & ".txt"
+
+            If Me.SfdGridResult.ShowDialog(Me) = DialogResult.OK Then
+                If System.IO.Path.GetExtension(Me.SfdGridResult.FileName).ToLower() = ".txt" Then
+                    Dim text = Me.Text & " [" & Now.ToLongDateString & " " & Now.ToLongTimeString & "]" & ControlChars.NewLine & ControlChars.NewLine
+
+                    For Each row As System.Windows.Forms.DataGridViewRow In Me.GrdResult.Rows
+                        If row.Index > 0 Then text &= ControlChars.NewLine & New String("-"c, 20)
+
+                        Dim resultRow = DirectCast(DirectCast(row.DataBoundItem, System.Data.DataRowView).Row, ResultSchema.GridResultRow)
+
+                        text &= row.Cells(Me.colResultEmail.Index).Value.ToString
+                        If Not resultRow.DataLeakFound Then
+                            text &= ControlChars.NewLine & "No data leaks found!"
+                        ElseIf Not resultRow.IsHaveIBeenPwnedNull Then
+                            text &= ControlChars.NewLine & Me.colResultHaveIBeenPwned.HeaderText & ": " & row.Cells(Me.colResultHaveIBeenPwned.Index).FormattedValue.ToString()
+                        ElseIf Not resultRow.IsHackedEmailsNull Then
+                            text &= ControlChars.NewLine & Me.colResultHackedEmails.HeaderText & ": " & row.Cells(Me.colResultHackedEmails.Index).FormattedValue.ToString()
+
+                        End If
+
+                    Next
+                    System.IO.File.WriteAllText(Me.SfdGridResult.FileName, text)
+                End If
+            End If
+        Catch ex As Exception
+            UtilMsgBox.ShowErrorException("Error during export Grid result to file", ex, False)
+        End Try
+    End Sub
 
 End Class

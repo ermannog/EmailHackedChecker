@@ -24,8 +24,8 @@ Partial Class MainForm
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.RbtCheckSingleEmail = New System.Windows.Forms.RadioButton()
         Me.TxtEmail = New System.Windows.Forms.TextBox()
         Me.MnuMain = New System.Windows.Forms.MenuStrip()
@@ -47,8 +47,10 @@ Partial Class MainForm
         Me.BtnCopyCell = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.BtnClearCache = New System.Windows.Forms.ToolStripButton()
+        Me.BtnExportGridResultsToFile = New System.Windows.Forms.ToolStripButton()
         Me.StsMain = New System.Windows.Forms.StatusStrip()
         Me.LblStatus = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.prbStatus = New System.Windows.Forms.ToolStripProgressBar()
         Me.GrbQueryResult = New System.Windows.Forms.GroupBox()
         Me.ChkShowOnlyDataLeakEmails = New System.Windows.Forms.CheckBox()
         Me.GrdResult = New System.Windows.Forms.DataGridView()
@@ -84,7 +86,7 @@ Partial Class MainForm
         Me.Lbl = New System.Windows.Forms.Label()
         Me.OfdEmailList = New System.Windows.Forms.OpenFileDialog()
         Me.DataGridViewImageColumn2 = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.prbStatus = New System.Windows.Forms.ToolStripProgressBar()
+        Me.SfdGridResult = New System.Windows.Forms.SaveFileDialog()
         Me.MnuMain.SuspendLayout()
         Me.TlsMain.SuspendLayout()
         Me.StsMain.SuspendLayout()
@@ -222,7 +224,7 @@ Partial Class MainForm
         'TlsMain
         '
         Me.TlsMain.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.TlsMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnExecute, Me.BtnStop, Me.ToolStripSeparator1, Me.BtnCopyCell, Me.ToolStripSeparator2, Me.BtnClearCache})
+        Me.TlsMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnExecute, Me.BtnStop, Me.ToolStripSeparator1, Me.BtnCopyCell, Me.ToolStripSeparator2, Me.BtnClearCache, Me.BtnExportGridResultsToFile})
         Me.TlsMain.Location = New System.Drawing.Point(0, 24)
         Me.TlsMain.Name = "TlsMain"
         Me.TlsMain.Size = New System.Drawing.Size(884, 27)
@@ -278,6 +280,16 @@ Partial Class MainForm
         Me.BtnClearCache.Size = New System.Drawing.Size(24, 24)
         Me.BtnClearCache.Text = "Clear cache"
         '
+        'BtnExportGridResultsToFile
+        '
+        Me.BtnExportGridResultsToFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BtnExportGridResultsToFile.Enabled = False
+        Me.BtnExportGridResultsToFile.Image = CType(resources.GetObject("BtnExportGridResultsToFile.Image"), System.Drawing.Image)
+        Me.BtnExportGridResultsToFile.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BtnExportGridResultsToFile.Name = "BtnExportGridResultsToFile"
+        Me.BtnExportGridResultsToFile.Size = New System.Drawing.Size(24, 24)
+        Me.BtnExportGridResultsToFile.Text = "Export grid results to file"
+        '
         'StsMain
         '
         Me.StsMain.ImageScalingSize = New System.Drawing.Size(20, 20)
@@ -296,6 +308,15 @@ Partial Class MainForm
         Me.LblStatus.Size = New System.Drawing.Size(39, 17)
         Me.LblStatus.Text = "Ready"
         Me.LblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'prbStatus
+        '
+        Me.prbStatus.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.prbStatus.Name = "prbStatus"
+        Me.prbStatus.Size = New System.Drawing.Size(100, 16)
+        Me.prbStatus.Step = 1
+        Me.prbStatus.Style = System.Windows.Forms.ProgressBarStyle.Continuous
+        Me.prbStatus.Visible = False
         '
         'GrbQueryResult
         '
@@ -382,8 +403,8 @@ Partial Class MainForm
         '
         Me.colResultLastDataLeakDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
         Me.colResultLastDataLeakDate.DataPropertyName = "LastDataLeakDate"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.colResultLastDataLeakDate.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.colResultLastDataLeakDate.DefaultCellStyle = DataGridViewCellStyle5
         Me.colResultLastDataLeakDate.HeaderText = "Last data leak"
         Me.colResultLastDataLeakDate.Name = "colResultLastDataLeakDate"
         Me.colResultLastDataLeakDate.ReadOnly = True
@@ -394,8 +415,8 @@ Partial Class MainForm
         '
         Me.colResultLastDataLeakPublicationDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
         Me.colResultLastDataLeakPublicationDate.DataPropertyName = "LastDataLeakPublicationDate"
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.colResultLastDataLeakPublicationDate.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.colResultLastDataLeakPublicationDate.DefaultCellStyle = DataGridViewCellStyle6
         Me.colResultLastDataLeakPublicationDate.HeaderText = "Last data leak publication"
         Me.colResultLastDataLeakPublicationDate.Name = "colResultLastDataLeakPublicationDate"
         Me.colResultLastDataLeakPublicationDate.ReadOnly = True
@@ -688,14 +709,11 @@ Partial Class MainForm
         Me.DataGridViewImageColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
         Me.DataGridViewImageColumn2.Width = 32
         '
-        'prbStatus
+        'SfdGridResult
         '
-        Me.prbStatus.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.prbStatus.Name = "prbStatus"
-        Me.prbStatus.Size = New System.Drawing.Size(100, 16)
-        Me.prbStatus.Step = 1
-        Me.prbStatus.Style = System.Windows.Forms.ProgressBarStyle.Continuous
-        Me.prbStatus.Visible = False
+        Me.SfdGridResult.DefaultExt = "txt"
+        Me.SfdGridResult.Filter = "Text file|*.txt"
+        Me.SfdGridResult.Title = "Save grid results to file"
         '
         'MainForm
         '
@@ -804,4 +822,6 @@ Partial Class MainForm
     Friend WithEvents MniEditCopy As ToolStripMenuItem
     Friend WithEvents ChkShowOnlyDataLeakEmails As CheckBox
     Friend WithEvents prbStatus As ToolStripProgressBar
+    Friend WithEvents BtnExportGridResultsToFile As ToolStripButton
+    Friend WithEvents SfdGridResult As SaveFileDialog
 End Class

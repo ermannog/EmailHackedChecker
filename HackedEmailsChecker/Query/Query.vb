@@ -55,6 +55,9 @@
 
         For Each email In emails
             For Each database As Util.Databases In System.Enum.GetValues(GetType(Util.Databases))
+                'Check flag Stop Execute
+                If Me.StopExecuteQueryFlag Then Exit For
+
                 If database = Util.Databases.Undefined Then Continue For
 
                 Dim queryExecute As QueryExecute = Nothing
@@ -69,12 +72,6 @@
                     Case Else
                         Throw New System.NotImplementedException("Execute method in Query class not implemented for database " & database.ToString())
                 End Select
-
-                'Check flag Stop Execute
-                If Me.StopExecuteQueryFlag Then
-                    Me.AddOutputInformation("The query execution has been interrupted.")
-                    Exit For
-                End If
 
                 Dim result As QueryResult = Nothing
 
@@ -101,10 +98,7 @@
                                 System.Threading.Thread.Sleep(100)
 
                                 'Check flag Stop Execute
-                                If Me.StopExecuteQueryFlag Then
-                                    Me.AddOutputInformation("The query execution has been interrupted.")
-                                    Exit For
-                                End If
+                                If Me.StopExecuteQueryFlag Then Exit For
                             End While
                         End If
 
@@ -144,6 +138,12 @@
                 'Add result to list
                 Me.resultsValue.Add(result)
             Next
+
+            'Exit on flag Stop Execute
+            If Me.StopExecuteQueryFlag Then
+                Me.AddOutputInformation("The query execution has been interrupted.")
+                Exit For
+            End If
         Next
     End Sub
 #End Region
