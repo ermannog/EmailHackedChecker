@@ -19,10 +19,13 @@
         'Reset Flag initialization
         Me.FormInitializing = False
 
+        'Update GridResultBindingSource.Filter
+        Me.SetGridResultBindingSourceFilter()
+
         '*** Test ***
-        'Me.TxtEmail.Text = "test@example.com"
-        'Me.TxtEmailListFilePath.Text = "EmailList.txt"
-        'Me.ChkEnableCache.Checked = False
+        Me.TxtEmail.Text = "test@example.com"
+        Me.TxtEmailListFilePath.Text = "EmailList.txt"
+        Me.ChkEnableCache.Checked = False
     End Sub
 
 #Region "Menu File"
@@ -46,6 +49,7 @@
 #End Region
 
 #Region "Menu Actions"
+    Private EmailList As New List(Of String)
     Private QueryRunnig As Boolean = False
     Private QueryException As System.Exception = Nothing
     Private Query As Query = Nothing
@@ -68,6 +72,9 @@
 
         'Reset Output
         Me.TxtOutput.ResetText()
+
+        'Show StatusBar ProgressBar
+        Me.prbStatus.Visible = True
 
         'Creation and set Query Object
         Try
@@ -131,18 +138,18 @@
     End Sub
 
     Private Sub BkwQuery_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BkwQuery.DoWork
-        'Set email list
-        Dim emails = New List(Of String)
+        'Clear email list
+        Me.EmailList.Clear()
 
         Try
             If Me.RbtCheckSingleEmail.Checked Then
                 'Add email
-                emails.Add(Me.TxtEmail.Text)
+                Me.EmailList.Add(Me.TxtEmail.Text)
             ElseIf Me.RbtCheckEmailList.Checked Then
                 'Add emailS read from file
                 If System.IO.File.Exists(Me.TxtEmailListFilePath.Text) Then
                     Me.LblStatus.Text = "Reading email list test file..."
-                    emails.AddRange(System.IO.File.ReadLines(Me.TxtEmailListFilePath.Text))
+                    Me.EmailList.AddRange(System.IO.File.ReadLines(Me.TxtEmailListFilePath.Text))
                 Else
                     UtilMsgBox.ShowError(String.Format("Error Email List file {0} not exists", System.IO.Path.GetFileName(Me.TxtEmailListFilePath.Text)), False)
                     e.Cancel = True
@@ -160,7 +167,7 @@
             'Setting StatusBar label
             Me.LblStatus.Text = "Execution query in progress..."
 
-            Me.Query.Execute(emails)
+            Me.Query.Execute(Me.EmailList)
         Catch ex As Exception
             Me.QueryException = ex
             e.Cancel = True
@@ -185,6 +192,9 @@
             Me.LblStatus.Text = "Execution query completed"
         End If
 
+        'Hide StatusBar ProgressBar
+        Me.prbStatus.Visible = False
+
         'Setting ToolBar
         Me.ActivateExecute(True)
 
@@ -199,15 +209,22 @@
             Me.AddGridResultRow(DirectCast(e.UserState, QueryOutputResultEmailFoundAddedEventArgs).Result)
             Me.AddOutput(OutputTypes.ResultEmailFound, DirectCast(e.UserState, QueryOutputResultEmailFoundAddedEventArgs).Text, False)
             Me.GrdResult.ScrollToLastRow()
+            Me.UpdateStatusProgressBar(DirectCast(e.UserState, QueryOutputResultEmailFoundAddedEventArgs).Result.Email)
         ElseIf TypeOf e.UserState Is QueryOutputResultEmailNotFoundAddedEventArgs Then
             Me.AddOutput(OutputTypes.ResultEmailNotFound, DirectCast(e.UserState, QueryOutputResultEmailNotFoundAddedEventArgs).Text, False)
             Me.AddGridResultRow(DirectCast(e.UserState, QueryOutputResultEmailNotFoundAddedEventArgs).Result)
             Me.GrdResult.ScrollToLastRow()
+            Me.UpdateStatusProgressBar(DirectCast(e.UserState, QueryOutputResultEmailNotFoundAddedEventArgs).Result.Email)
         ElseIf TypeOf e.UserState Is QueryOutputErrorAddedEventArgs Then
             With DirectCast(e.UserState, QueryOutputErrorAddedEventArgs)
                 Me.AddOutput(OutputTypes.Error, UtilMsgBox.GetExceptionMessage(.Text, .Exception))
             End With
         End If
+    End Sub
+
+    Private Sub UpdateStatusProgressBar(email As String)
+        Me.prbStatus.Maximum = Me.EmailList.Count
+        Me.prbStatus.Value = Me.EmailList.IndexOf(email)
     End Sub
 
     Private Sub Query_OutputInformationAdded(sender As Object, e As QueryOutputInformationAddedEventArgs)
@@ -472,12 +489,17 @@
     End Sub
 
     Private Sub ChkShowOnlyDataLeakEmails_CheckedChanged(sender As Object, e As EventArgs) Handles ChkShowOnlyDataLeakEmails.CheckedChanged
+        If Not Me.FormInitializing Then Me.SetGridResultBindingSourceFilter()
+    End Sub
+
+    Private Sub SetGridResultBindingSourceFilter()
         If Me.ChkShowOnlyDataLeakEmails.Checked Then
             Me.GridResultBindingSource.Filter = "DataLeakFound=True"
         Else
-            Me.GridResultBindingSource.Filter = String.Empty
+            Me.GridResultBindingSource.Filter = Nothing
         End If
     End Sub
+
 #End Region
 
 End Class

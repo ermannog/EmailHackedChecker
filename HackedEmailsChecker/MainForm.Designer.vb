@@ -23,14 +23,16 @@ Partial Class MainForm
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.RbtCheckSingleEmail = New System.Windows.Forms.RadioButton()
         Me.TxtEmail = New System.Windows.Forms.TextBox()
         Me.MnuMain = New System.Windows.Forms.MenuStrip()
         Me.MniFile = New System.Windows.Forms.ToolStripMenuItem()
         Me.MniFileExit = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MniEdit = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MniEditCopy = New System.Windows.Forms.ToolStripMenuItem()
         Me.MniActions = New System.Windows.Forms.ToolStripMenuItem()
         Me.MniActionsExecute = New System.Windows.Forms.ToolStripMenuItem()
         Me.MniActionsStop = New System.Windows.Forms.ToolStripMenuItem()
@@ -48,6 +50,7 @@ Partial Class MainForm
         Me.StsMain = New System.Windows.Forms.StatusStrip()
         Me.LblStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.GrbQueryResult = New System.Windows.Forms.GroupBox()
+        Me.ChkShowOnlyDataLeakEmails = New System.Windows.Forms.CheckBox()
         Me.GrdResult = New System.Windows.Forms.DataGridView()
         Me.colResultImage = New System.Windows.Forms.DataGridViewImageColumn()
         Me.colResultEmail = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -81,9 +84,7 @@ Partial Class MainForm
         Me.Lbl = New System.Windows.Forms.Label()
         Me.OfdEmailList = New System.Windows.Forms.OpenFileDialog()
         Me.DataGridViewImageColumn2 = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.MniEdit = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MniEditCopy = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ChkShowOnlyDataLeakEmails = New System.Windows.Forms.CheckBox()
+        Me.prbStatus = New System.Windows.Forms.ToolStripProgressBar()
         Me.MnuMain.SuspendLayout()
         Me.TlsMain.SuspendLayout()
         Me.StsMain.SuspendLayout()
@@ -148,8 +149,23 @@ Partial Class MainForm
         'MniFileExit
         '
         Me.MniFileExit.Name = "MniFileExit"
-        Me.MniFileExit.Size = New System.Drawing.Size(152, 22)
+        Me.MniFileExit.Size = New System.Drawing.Size(92, 22)
         Me.MniFileExit.Text = "E&xit"
+        '
+        'MniEdit
+        '
+        Me.MniEdit.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MniEditCopy})
+        Me.MniEdit.Name = "MniEdit"
+        Me.MniEdit.Size = New System.Drawing.Size(39, 20)
+        Me.MniEdit.Text = "&Edit"
+        '
+        'MniEditCopy
+        '
+        Me.MniEditCopy.Enabled = False
+        Me.MniEditCopy.Image = CType(resources.GetObject("MniEditCopy.Image"), System.Drawing.Image)
+        Me.MniEditCopy.Name = "MniEditCopy"
+        Me.MniEditCopy.Size = New System.Drawing.Size(102, 22)
+        Me.MniEditCopy.Text = "&Copy"
         '
         'MniActions
         '
@@ -265,7 +281,8 @@ Partial Class MainForm
         'StsMain
         '
         Me.StsMain.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.StsMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblStatus})
+        Me.StsMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblStatus, Me.prbStatus})
+        Me.StsMain.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow
         Me.StsMain.Location = New System.Drawing.Point(0, 539)
         Me.StsMain.Name = "StsMain"
         Me.StsMain.Padding = New System.Windows.Forms.Padding(1, 0, 10, 0)
@@ -293,6 +310,19 @@ Partial Class MainForm
         Me.GrbQueryResult.TabIndex = 5
         Me.GrbQueryResult.TabStop = False
         Me.GrbQueryResult.Text = "Query result"
+        '
+        'ChkShowOnlyDataLeakEmails
+        '
+        Me.ChkShowOnlyDataLeakEmails.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.ChkShowOnlyDataLeakEmails.AutoSize = True
+        Me.ChkShowOnlyDataLeakEmails.Checked = True
+        Me.ChkShowOnlyDataLeakEmails.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.ChkShowOnlyDataLeakEmails.Location = New System.Drawing.Point(5, 213)
+        Me.ChkShowOnlyDataLeakEmails.Name = "ChkShowOnlyDataLeakEmails"
+        Me.ChkShowOnlyDataLeakEmails.Size = New System.Drawing.Size(182, 17)
+        Me.ChkShowOnlyDataLeakEmails.TabIndex = 1
+        Me.ChkShowOnlyDataLeakEmails.Text = "Show only Emails with data leaks"
+        Me.ChkShowOnlyDataLeakEmails.UseVisualStyleBackColor = True
         '
         'GrdResult
         '
@@ -352,8 +382,8 @@ Partial Class MainForm
         '
         Me.colResultLastDataLeakDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
         Me.colResultLastDataLeakDate.DataPropertyName = "LastDataLeakDate"
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.colResultLastDataLeakDate.DefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.colResultLastDataLeakDate.DefaultCellStyle = DataGridViewCellStyle3
         Me.colResultLastDataLeakDate.HeaderText = "Last data leak"
         Me.colResultLastDataLeakDate.Name = "colResultLastDataLeakDate"
         Me.colResultLastDataLeakDate.ReadOnly = True
@@ -364,8 +394,8 @@ Partial Class MainForm
         '
         Me.colResultLastDataLeakPublicationDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
         Me.colResultLastDataLeakPublicationDate.DataPropertyName = "LastDataLeakPublicationDate"
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.colResultLastDataLeakPublicationDate.DefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.colResultLastDataLeakPublicationDate.DefaultCellStyle = DataGridViewCellStyle4
         Me.colResultLastDataLeakPublicationDate.HeaderText = "Last data leak publication"
         Me.colResultLastDataLeakPublicationDate.Name = "colResultLastDataLeakPublicationDate"
         Me.colResultLastDataLeakPublicationDate.ReadOnly = True
@@ -658,33 +688,14 @@ Partial Class MainForm
         Me.DataGridViewImageColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
         Me.DataGridViewImageColumn2.Width = 32
         '
-        'MniEdit
+        'prbStatus
         '
-        Me.MniEdit.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MniEditCopy})
-        Me.MniEdit.Name = "MniEdit"
-        Me.MniEdit.Size = New System.Drawing.Size(39, 20)
-        Me.MniEdit.Text = "&Edit"
-        '
-        'MniEditCopy
-        '
-        Me.MniEditCopy.Enabled = False
-        Me.MniEditCopy.Image = CType(resources.GetObject("MniEditCopy.Image"), System.Drawing.Image)
-        Me.MniEditCopy.Name = "MniEditCopy"
-        Me.MniEditCopy.Size = New System.Drawing.Size(156, 26)
-        Me.MniEditCopy.Text = "&Copy"
-        '
-        'ChkShowOnlyDataLeakEmails
-        '
-        Me.ChkShowOnlyDataLeakEmails.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ChkShowOnlyDataLeakEmails.AutoSize = True
-        Me.ChkShowOnlyDataLeakEmails.Checked = True
-        Me.ChkShowOnlyDataLeakEmails.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.ChkShowOnlyDataLeakEmails.Location = New System.Drawing.Point(5, 213)
-        Me.ChkShowOnlyDataLeakEmails.Name = "ChkShowOnlyDataLeakEmails"
-        Me.ChkShowOnlyDataLeakEmails.Size = New System.Drawing.Size(182, 17)
-        Me.ChkShowOnlyDataLeakEmails.TabIndex = 1
-        Me.ChkShowOnlyDataLeakEmails.Text = "Show only Emails with data leaks"
-        Me.ChkShowOnlyDataLeakEmails.UseVisualStyleBackColor = True
+        Me.prbStatus.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.prbStatus.Name = "prbStatus"
+        Me.prbStatus.Size = New System.Drawing.Size(100, 16)
+        Me.prbStatus.Step = 1
+        Me.prbStatus.Style = System.Windows.Forms.ProgressBarStyle.Continuous
+        Me.prbStatus.Visible = False
         '
         'MainForm
         '
@@ -792,4 +803,5 @@ Partial Class MainForm
     Friend WithEvents MniEdit As ToolStripMenuItem
     Friend WithEvents MniEditCopy As ToolStripMenuItem
     Friend WithEvents ChkShowOnlyDataLeakEmails As CheckBox
+    Friend WithEvents prbStatus As ToolStripProgressBar
 End Class

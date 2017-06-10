@@ -9,32 +9,8 @@
         If Not String.IsNullOrWhiteSpace(response) Then
             Select Case database
                 Case Util.Databases.HaveIBeenPwned
-                    'Me.foundValue = True
                     Me.foundValue = UtilHaveIBeenPwned.FillQueryItems(Me.itemsValue, response)
-                    'Dim list As List(Of QueryHaveIBeenPwnedResultItem) = Newtonsoft.Json.JsonConvert.DeserializeObject(Of List(Of QueryHaveIBeenPwnedResultItem))(response)
-                    'If ((Not list Is Nothing) AndAlso (list.Count > 0)) Then
-                    '    Dim item As QueryHaveIBeenPwnedResultItem
-                    '    For Each item In list
-                    '        Dim additionalInformation As String = String.Empty
-                    '        If ((Not item.DataClasses Is Nothing) AndAlso (item.DataClasses.Count > 0)) Then
-                    '            additionalInformation = String.Join(",", item.DataClasses.ToArray)
-                    '        End If
-                    '        Me.itemsValue.Add(New QueryResultItem(item.Title, item.Description, item.BreachDate, item.AddedDate, additionalInformation))
-                    '    Next
-                    'End If
-                    'Exit Select
                 Case Util.Databases.HackedEmails
-                    'Dim item As QueryHackedEmailsResultItem = Newtonsoft.Json.JsonConvert.DeserializeObject(Of QueryHackedEmailsResultItem)(response)
-                    'Me.foundValue = (item.status = "found")
-                    'If ((Not item.data Is Nothing) AndAlso (item.data.Count > 0)) Then
-                    '    Dim data As QueryHackedEmailsResultItemData
-                    '    For Each data In item.data
-                    '        Dim description = "<a href=""" & data.details & """target=""_blank"">" & data.details & "</a>"
-                    '        Me.itemsValue.Add(New QueryResultItem(data.title, description, data.date_leaked, data.date_created, String.Empty))
-                    '    Next
-                    'End If
-                    'Exit Select
-
                     Me.foundValue = UtilHackedEmails.FillQueryItems(Me.itemsValue, response)
                 Case Else
                     Throw New System.NotImplementedException("New method in QueryResult class not implemented for database " & Me.databaseValue.ToString())

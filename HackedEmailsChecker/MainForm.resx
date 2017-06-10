@@ -121,6 +121,15 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="MniEditCopy.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAJlJREFUOE+1ks0NwyAMRjNCZuLOAKzCKRt0tAzCgTRUXB2+CpyIOpJLVUtP/MkP
+        WzAR0U+cky5yzo8CCcTCrBGQtZaMMYxzjkIIkKwqAZK2+GSw9t6/KxkSNIkoKJtizym91ILbnvc96QQ4
+        7G9rPQ8JrgkYAaocEnQsXwvq43D8R9C/Amg91zwOSXD398FS8zg+BKOIm3poOgCpGLgipu3OWgAAAABJ
+        RU5ErkJggg==
+</value>
+  </data>
   <data name="MniActionsExecute.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -206,6 +215,27 @@
   <metadata name="GridResultBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>659, 17</value>
   </metadata>
+  <metadata name="colResultImage.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="colResultHaveIBeenPwned.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="colResultHackedEmails.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="colResultLastDataLeakDate.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="colResultLastDataLeakPublicationDate.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="GridResultBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>659, 17</value>
+  </metadata>
+  <metadata name="DstResultSchema.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>485, 17</value>
+  </metadata>
   <metadata name="DstResultSchema.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>485, 17</value>
   </metadata>
@@ -214,11 +244,11 @@
   </metadata>
   <data name="CmiGridResultCopy.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAACZSURBVDhPtZLNDcMgDEYzQmbizgCswikbdLQMwoE0VFwd
-        vgqciDqSS1VLT/zJD1swEdFPnJMucs6PAgnEwqwRkLWWjDGMc45CCJCsKgGStvhksPbevysZEjSJKCib
-        Ys8pvdSC2573PekEOOxvaz0PCa4JGAGqHBJ0LF8L6uNw/EfQvwJoPdc8Dklw9/fBUvM4PgSjiJt6aDoA
-        qRi4IqbtzloAAAAASUVORK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAJlJREFUOE+1ks0NwyAMRjNCZuLOAKzCKRt0tAzCgTRUXB2+CpyIOpJLVUtP/MkP
+        WzAR0U+cky5yzo8CCcTCrBGQtZaMMYxzjkIIkKwqAZK2+GSw9t6/KxkSNIkoKJtizym91ILbnvc96QQ4
+        7G9rPQ8JrgkYAaocEnQsXwvq43D8R9C/Amg91zwOSXD398FS8zg+BKOIm3poOgCpGLgipu3OWgAAAABJ
+        RU5ErkJggg==
 </value>
   </data>
   <metadata name="BkwQuery.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -227,13 +257,4 @@
   <metadata name="OfdEmailList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>885, 17</value>
   </metadata>
-  <data name="MniEditCopy.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAACZSURBVDhPtZLNDcMgDEYzQmbizgCswikbdLQMwoE0VFwd
-        vgqciDqSS1VLT/zJD1swEdFPnJMucs6PAgnEwqwRkLWWjDGMc45CCJCsKgGStvhksPbevysZEjSJKCib
-        Ys8pvdSC2573PekEOOxvaz0PCa4JGAGqHBJ0LF8L6uNw/EfQvwJoPdc8Dklw9/fBUvM4PgSjiJt6aDoA
-        qRi4IqbtzloAAAAASUVORK5CYII=
-</value>
-  </data>
 </root>

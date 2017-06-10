@@ -54,7 +54,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>HackedEmail.ico</ApplicationIcon>
+    <ApplicationIcon>HackedEmailGrey.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -200,7 +200,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="HackedEmail.ico" />
+    <Content Include="HackedEmailGrey.ico" />
     <Content Include="Note.txt" />
     <None Include="Resources\Security_Shields_Critical_32xSM_color.png" />
     <None Include="Resources\Security_Shields_Complete_and_ok_32xSM_color.png" />
