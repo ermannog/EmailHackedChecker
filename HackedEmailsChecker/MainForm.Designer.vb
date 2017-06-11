@@ -23,13 +23,15 @@ Partial Class MainForm
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Me.RbtCheckSingleEmail = New System.Windows.Forms.RadioButton()
         Me.TxtEmail = New System.Windows.Forms.TextBox()
         Me.MnuMain = New System.Windows.Forms.MenuStrip()
         Me.MniFile = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MniFileExportGridResultsToFile = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.MniFileExit = New System.Windows.Forms.ToolStripMenuItem()
         Me.MniEdit = New System.Windows.Forms.ToolStripMenuItem()
         Me.MniEditCopy = New System.Windows.Forms.ToolStripMenuItem()
@@ -60,7 +62,7 @@ Partial Class MainForm
         Me.colResultHackedEmails = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colResultLastDataLeakDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colResultLastDataLeakPublicationDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.GridResultBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.BnsGridResult = New System.Windows.Forms.BindingSource(Me.components)
         Me.DstResultSchema = New HackedEmailsChecker.ResultSchema()
         Me.CmnGridResult = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.CmiGridResultCopy = New System.Windows.Forms.ToolStripMenuItem()
@@ -87,14 +89,12 @@ Partial Class MainForm
         Me.OfdEmailList = New System.Windows.Forms.OpenFileDialog()
         Me.DataGridViewImageColumn2 = New System.Windows.Forms.DataGridViewImageColumn()
         Me.SfdGridResult = New System.Windows.Forms.SaveFileDialog()
-        Me.MniFileExportGridResultsToFile = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.MnuMain.SuspendLayout()
         Me.TlsMain.SuspendLayout()
         Me.StsMain.SuspendLayout()
         Me.GrbQueryResult.SuspendLayout()
         CType(Me.GrdResult, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.GridResultBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BnsGridResult, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DstResultSchema, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.CmnGridResult.SuspendLayout()
         Me.GrbQueryType.SuspendLayout()
@@ -150,12 +150,26 @@ Partial Class MainForm
         Me.MniFile.Size = New System.Drawing.Size(37, 20)
         Me.MniFile.Text = "&File"
         '
+        'MniFileExportGridResultsToFile
+        '
+        Me.MniFileExportGridResultsToFile.Enabled = False
+        Me.MniFileExportGridResultsToFile.Image = CType(resources.GetObject("MniFileExportGridResultsToFile.Image"), System.Drawing.Image)
+        Me.MniFileExportGridResultsToFile.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.MniFileExportGridResultsToFile.Name = "MniFileExportGridResultsToFile"
+        Me.MniFileExportGridResultsToFile.Size = New System.Drawing.Size(210, 22)
+        Me.MniFileExportGridResultsToFile.Text = "Export grid results to file..."
+        '
+        'ToolStripSeparator3
+        '
+        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(207, 6)
+        '
         'MniFileExit
         '
         Me.MniFileExit.Image = CType(resources.GetObject("MniFileExit.Image"), System.Drawing.Image)
         Me.MniFileExit.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.MniFileExit.Name = "MniFileExit"
-        Me.MniFileExit.Size = New System.Drawing.Size(214, 26)
+        Me.MniFileExit.Size = New System.Drawing.Size(210, 22)
         Me.MniFileExit.Text = "E&xit"
         '
         'MniEdit
@@ -359,7 +373,7 @@ Partial Class MainForm
         Me.GrdResult.AutoGenerateColumns = False
         Me.GrdResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.GrdResult.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colResultImage, Me.colResultEmail, Me.colResultHaveIBeenPwned, Me.colResultHackedEmails, Me.colResultLastDataLeakDate, Me.colResultLastDataLeakPublicationDate})
-        Me.GrdResult.DataSource = Me.GridResultBindingSource
+        Me.GrdResult.DataSource = Me.BnsGridResult
         Me.GrdResult.Location = New System.Drawing.Point(2, 15)
         Me.GrdResult.Name = "GrdResult"
         Me.GrdResult.ReadOnly = True
@@ -427,13 +441,13 @@ Partial Class MainForm
         Me.colResultLastDataLeakPublicationDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.colResultLastDataLeakPublicationDate.Width = 134
         '
-        'GridResultBindingSource
+        'BnsGridResult
         '
-        Me.GridResultBindingSource.AllowNew = False
-        Me.GridResultBindingSource.DataMember = "GridResult"
-        Me.GridResultBindingSource.DataSource = Me.DstResultSchema
-        Me.GridResultBindingSource.Filter = ""
-        Me.GridResultBindingSource.Sort = ""
+        Me.BnsGridResult.AllowNew = False
+        Me.BnsGridResult.DataMember = "GridResult"
+        Me.BnsGridResult.DataSource = Me.DstResultSchema
+        Me.BnsGridResult.Filter = ""
+        Me.BnsGridResult.Sort = ""
         '
         'DstResultSchema
         '
@@ -719,20 +733,6 @@ Partial Class MainForm
         Me.SfdGridResult.Filter = "Text file|*.txt"
         Me.SfdGridResult.Title = "Save grid results to file"
         '
-        'MniFileExportGridResultsToFile
-        '
-        Me.MniFileExportGridResultsToFile.Enabled = False
-        Me.MniFileExportGridResultsToFile.Image = CType(resources.GetObject("MniFileExportGridResultsToFile.Image"), System.Drawing.Image)
-        Me.MniFileExportGridResultsToFile.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.MniFileExportGridResultsToFile.Name = "MniFileExportGridResultsToFile"
-        Me.MniFileExportGridResultsToFile.Size = New System.Drawing.Size(214, 26)
-        Me.MniFileExportGridResultsToFile.Text = "Export grid results to file..."
-        '
-        'ToolStripSeparator3
-        '
-        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
-        Me.ToolStripSeparator3.Size = New System.Drawing.Size(211, 6)
-        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -759,7 +759,7 @@ Partial Class MainForm
         Me.GrbQueryResult.ResumeLayout(False)
         Me.GrbQueryResult.PerformLayout()
         CType(Me.GrdResult, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.GridResultBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BnsGridResult, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DstResultSchema, System.ComponentModel.ISupportInitialize).EndInit()
         Me.CmnGridResult.ResumeLayout(False)
         Me.GrbQueryType.ResumeLayout(False)
@@ -808,7 +808,7 @@ Partial Class MainForm
     Friend WithEvents BtnClearCache As ToolStripButton
     Friend WithEvents GrdResult As DataGridView
     Friend WithEvents ImageDataGridViewTextBoxColumn As DataGridViewImageColumn
-    Friend WithEvents GridResultBindingSource As BindingSource
+    Friend WithEvents BnsGridResult As BindingSource
     Friend WithEvents DstResultSchema As ResultSchema
     Friend WithEvents DataGridViewImageColumn1 As DataGridViewImageColumn
     Friend WithEvents BtnBrowseEmailListFile As Button

@@ -211,7 +211,7 @@
         End If
 
         'Dim hackedEmailsCount = (From r In Me.Query.Results Where r.DataLeakFound = True).Count()
-        Me.LblStatus.Text &= String.Format(" ({0} hacked emails found)", Me.Query.EmailsInDataLeakCount)
+        Me.LblStatus.Text &= String.Format(" ({0} hacked emails found)", Me.Query.HackedEmailsCount)
 
         'Hide StatusBar ProgressBar
         Me.prbStatus.Visible = False
@@ -373,7 +373,7 @@
 
         Try
             If e.ColumnIndex = Me.colResultImage.Index Then
-                Dim resultRow = DirectCast(DirectCast(Me.GridResultBindingSource.List(e.RowIndex), System.Data.DataRowView).Row, ResultSchema.GridResultRow)
+                Dim resultRow = DirectCast(DirectCast(Me.BnsGridResult.List(e.RowIndex), System.Data.DataRowView).Row, ResultSchema.GridResultRow)
 
                 If resultRow.DataLeakFound Then
                     e.Value = My.Resources.SecurityShieldsCritical
@@ -383,7 +383,7 @@
 
                 e.FormattingApplied = True
             ElseIf e.ColumnIndex = Me.colResultHaveIBeenPwned.Index OrElse e.ColumnIndex = Me.colResultHackedEmails.Index Then
-                Dim resultRow = DirectCast(DirectCast(Me.GridResultBindingSource.List(e.RowIndex), System.Data.DataRowView).Row, ResultSchema.GridResultRow)
+                Dim resultRow = DirectCast(DirectCast(Me.BnsGridResult.List(e.RowIndex), System.Data.DataRowView).Row, ResultSchema.GridResultRow)
 
                 Dim leaks As Int64? = Nothing
                 If e.ColumnIndex = Me.colResultHaveIBeenPwned.Index AndAlso Not resultRow.IsHaveIBeenPwnedNull() Then leaks = resultRow.HaveIBeenPwned
@@ -452,14 +452,14 @@
 
     Private Sub SetGridResultBindingSourceFilter()
         If Me.ChkShowOnlyDataLeakEmails.Checked Then
-            Me.GridResultBindingSource.Filter = "DataLeakFound=True"
+            Me.BnsGridResult.Filter = "DataLeakFound=True"
         Else
-            Me.GridResultBindingSource.Filter = Nothing
+            Me.BnsGridResult.Filter = Nothing
         End If
     End Sub
 
-    Private Sub GridResultBindingSource_ListChanged(sender As Object, e As System.ComponentModel.ListChangedEventArgs) Handles GridResultBindingSource.ListChanged
-        Me.MniFileExportGridResultsToFile.Enabled = Me.GridResultBindingSource.Count > 0
+    Private Sub GridResultBindingSource_ListChanged(sender As Object, e As System.ComponentModel.ListChangedEventArgs) Handles BnsGridResult.ListChanged
+        Me.MniFileExportGridResultsToFile.Enabled = Me.BnsGridResult.Count > 0
         Me.BtnExportGridResultsToFile.Enabled = MniFileExportGridResultsToFile.Enabled
     End Sub
 #End Region
@@ -549,7 +549,13 @@
     Private Sub ExportGridResultsToTextFile(file As String)
         Dim text = Me.Text & " [" & Now.ToLongDateString & " " & Now.ToLongTimeString & "]" & ControlChars.NewLine
 
+        Dim hackedEmailsCount = (From drv In Me.BnsGridResult.List Where DirectCast(DirectCast(drv, System.Data.DataRowView).Row, ResultSchema.GridResultRow).DataLeakFound = True).Count()
         text &= ControlChars.NewLine
+        If hackedEmailsCount = 0 Then
+            text &= "No hacked emails found."
+        Else
+            text &= hackedEmailsCount.ToString("#,##0") & " hacked emails found!" & ControlChars.NewLine
+        End If
 
         For Each row As System.Windows.Forms.DataGridViewRow In Me.GrdResult.Rows
             If row.Index > 0 Then text &= ControlChars.NewLine & New String("-"c, 20)

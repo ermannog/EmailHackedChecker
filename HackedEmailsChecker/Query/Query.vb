@@ -37,7 +37,7 @@
     Private DatabaseLastRequest As New System.Collections.Generic.Dictionary(Of Util.Databases, DateTime)
 
 
-    Public ReadOnly Property EmailsInDataLeakCount As Int64
+    Public ReadOnly Property HackedEmailsCount As Int64
         Get
             Return (From r In Me.Results Where r.DataLeakFound = True Select r.Email).Distinct().Count()
         End Get
@@ -109,7 +109,19 @@
                         End If
 
                         'Request to database
-                        result = queryExecute(email)
+                        Try
+                            result = queryExecute(email)
+                        Catch ex As Exception
+                            If TypeOf ex Is System.Net.WebException AndAlso DirectCast(DirectCast(ex, System.Net.WebException).Response, System.Net.HttpWebResponse).StatusCode = System.Net.HttpStatusCode.Forbidden Then
+                                If database = Util.Databases.HackedEmails Then
+                                    Me.AddOutputError("Query (Access denied hits limit per day and/or per ip may have been overcome)")
+                                Else
+                                    Me.AddOutputError("Query (Access denied)", ex)
+                                End If
+                            Else
+                                Throw ex
+                            End If
+                        End Try
 
                         'Update last request date
                         If Not Me.DatabaseLastRequest.ContainsKey(database) Then
@@ -135,14 +147,16 @@
                 End If
 
                 'Raise Results Events
-                If result.DataLeakFound Then
-                    Me.AddOutputResultEmailFoundAdded(String.Format("found {0} data leaks", result.Items.Count), result)
-                Else
-                    Me.AddOutputResultEmailNotFound("Not found", result)
+                If result IsNot Nothing Then
+                    If result.DataLeakFound Then
+                        Me.AddOutputResultEmailFoundAdded(String.Format("found {0} data leaks", result.Items.Count), result)
+                    Else
+                        Me.AddOutputResultEmailNotFound("No data leak found", result)
+                    End If
                 End If
 
                 'Add result to list
-                Me.resultsValue.Add(result)
+                If result IsNot Nothing Then Me.resultsValue.Add(result)
             Next
 
             'Exit on flag Stop Execute
@@ -202,8 +216,14 @@
         Me.hasErrorsValue = True
         RaiseEvent OutputErrorAdded(sender, e)
     End Sub
-    Private Sub AddOutputError(operation As String, ex As System.Exception)
-        Me.OnOutputErrorAdded(Me, New QueryOutputErrorAddedEventArgs("Error during " & operation & ":" & ex.Message, ex))
+
+    Private Overloads Sub AddOutputError(operation As String)
+        Me.AddOutputError(operation, Nothing)
+    End Sub
+    Private Overloads Sub AddOutputError(operation As String, ex As System.Exception)
+        Dim text = "Error during " & operation
+        If ex IsNot Nothing Then text &= ":" & ex.Message
+        Me.OnOutputErrorAdded(Me, New QueryOutputErrorAddedEventArgs(text, ex))
     End Sub
 #End Region
 End Class
