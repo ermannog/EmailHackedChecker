@@ -9,9 +9,9 @@
         If Not String.IsNullOrWhiteSpace(response) Then
             Select Case database
                 Case Util.Databases.HaveIBeenPwned
-                    Me.foundValue = UtilHaveIBeenPwned.FillQueryItems(Me.itemsValue, response)
+                    Me.dataLeakFoundValue = UtilHaveIBeenPwned.FillQueryItems(Me.itemsValue, response)
                 Case Util.Databases.HackedEmails
-                    Me.foundValue = UtilHackedEmails.FillQueryItems(Me.itemsValue, response)
+                    Me.dataLeakFoundValue = UtilHackedEmails.FillQueryItems(Me.itemsValue, response)
                 Case Else
                     Throw New System.NotImplementedException("New method in QueryResult class not implemented for database " & Me.databaseValue.ToString())
             End Select
@@ -95,10 +95,10 @@
         End Get
     End Property
 
-    Private foundValue As Boolean = False
-    Public ReadOnly Property Found As Boolean
+    Private dataLeakFoundValue As Boolean = False
+    Public ReadOnly Property DataLeakFound As Boolean
         Get
-            Return Me.foundValue
+            Return Me.dataLeakFoundValue
         End Get
     End Property
 

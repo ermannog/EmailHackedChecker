@@ -23,14 +23,32 @@
         Me.SetGridResultBindingSourceFilter()
 
         '*** Test ***
-        Me.TxtEmail.Text = "test@example.com"
-        Me.TxtEmailListFilePath.Text = "EmailList.txt"
-        Me.ChkEnableCache.Checked = False
+        'Me.TxtEmail.Text = "test@example.com"
+        'Me.TxtEmailListFilePath.Text = "EmailList.txt"
+        'Me.ChkEnableCache.Checked = False
     End Sub
 
 #Region "Menu File"
     Private Sub MniFileExit_Click(sender As Object, e As EventArgs) Handles MniFileExit.Click
         System.Environment.Exit(0)
+    End Sub
+
+    Private Sub MniFileExportGridResultsToFile_Click(sender As Object, e As EventArgs) Handles MniFileExportGridResultsToFile.Click
+        'Set Wait Cursor
+        Me.SetWaitCursor(True)
+
+        Try
+            Me.ExportGridResultsToFile()
+        Catch ex As Exception
+            UtilMsgBox.ShowErrorException("Error during export Grid result to file", ex, False)
+        End Try
+
+        'Reset Wait Cursor
+        Me.SetWaitCursor(False)
+    End Sub
+
+    Private Sub BtnExportGridResultsToFile_Click(sender As Object, e As EventArgs) Handles BtnExportGridResultsToFile.Click
+        Me.MniFileExportGridResultsToFile.PerformClick()
     End Sub
 #End Region
 
@@ -192,6 +210,9 @@
             Me.LblStatus.Text = "Execution query completed"
         End If
 
+        'Dim hackedEmailsCount = (From r In Me.Query.Results Where r.DataLeakFound = True).Count()
+        Me.LblStatus.Text &= String.Format(" ({0} hacked emails found)", Me.Query.EmailsInDataLeakCount)
+
         'Hide StatusBar ProgressBar
         Me.prbStatus.Visible = False
 
@@ -246,6 +267,9 @@
 
 #Region "Menu Cache"
     Private Sub MniClearCache_Click(sender As Object, e As EventArgs) Handles MniClearCache.Click
+        'Set Wait Cursor
+        Me.SetWaitCursor(True)
+
         Try
             Dim cacheDirectoryPath = Util.GetCacheDirectoryPath()
             If System.IO.Directory.Exists(cacheDirectoryPath) Then
@@ -258,6 +282,9 @@
         Catch ex As Exception
             UtilMsgBox.ShowErrorException("Error during clear cache", ex, False)
         End Try
+
+        'Reset Wait Cursor
+        Me.SetWaitCursor(False)
     End Sub
     Private Sub BtnClearCache_Click(sender As Object, e As EventArgs) Handles BtnClearCache.Click
         Me.MniClearCache.PerformClick()
@@ -394,7 +421,7 @@
             Me.DstResultSchema.GridResult.AddGridResultRow(row)
         End If
 
-        If result.Found Then row.DataLeakFound = True
+        If result.DataLeakFound Then row.DataLeakFound = True
 
         'Set Result Data Leaks count
         Dim resultDataLeakCountColumn = (From c In row.Table.Columns Where DirectCast(c, System.Data.DataColumn).ColumnName = result.Database.ToString()).SingleOrDefault()
@@ -403,14 +430,14 @@
         End If
 
         'Set Last data leak date
-        If result.Found AndAlso result.LastDataLeak.DataLeakDate.HasValue Then
+        If result.DataLeakFound AndAlso result.LastDataLeak.DataLeakDate.HasValue Then
             If row.IsLastDataLeakDateNull() OrElse row.LastDataLeakDate < result.LastDataLeak.DataLeakDate.Value Then
                 row.LastDataLeakDate = result.LastDataLeak.DataLeakDate.Value
             End If
         End If
 
         'Set Last data leak publication date
-        If result.Found AndAlso result.LastDataLeakPublished.DataLeakDate.HasValue Then
+        If result.DataLeakFound AndAlso result.LastDataLeakPublished.DataLeakDate.HasValue Then
             If row.IsLastDataLeakPublicationDateNull() OrElse row.LastDataLeakPublicationDate < result.LastDataLeakPublished.DataLeakDate.Value Then
                 row.LastDataLeakPublicationDate = result.LastDataLeakPublished.DataLeakDate.Value
             End If
@@ -432,7 +459,8 @@
     End Sub
 
     Private Sub GridResultBindingSource_ListChanged(sender As Object, e As System.ComponentModel.ListChangedEventArgs) Handles GridResultBindingSource.ListChanged
-        Me.BtnExportGridResultsToFile.Enabled = Me.GridResultBindingSource.Count > 0
+        Me.MniFileExportGridResultsToFile.Enabled = Me.GridResultBindingSource.Count > 0
+        Me.BtnExportGridResultsToFile.Enabled = MniFileExportGridResultsToFile.Enabled
     End Sub
 #End Region
 
@@ -506,37 +534,50 @@
     End Sub
 #End Region
 
-    Private Sub BtnExportGridResultsToFile_Click(sender As Object, e As EventArgs) Handles BtnExportGridResultsToFile.Click
-        Try
-            Me.SfdGridResult.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-            Me.SfdGridResult.FileName = My.Application.Info.AssemblyName & "-Results-" & Now.ToString("yyyyMMdd") & ".txt"
+#Region "Export Grid result to file"
+    Private Sub ExportGridResultsToFile()
+        Me.SfdGridResult.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+        Me.SfdGridResult.FileName = My.Application.Info.AssemblyName & "-Results-" & Now.ToString("yyyyMMdd") & ".txt"
 
-            If Me.SfdGridResult.ShowDialog(Me) = DialogResult.OK Then
-                If System.IO.Path.GetExtension(Me.SfdGridResult.FileName).ToLower() = ".txt" Then
-                    Dim text = Me.Text & " [" & Now.ToLongDateString & " " & Now.ToLongTimeString & "]" & ControlChars.NewLine & ControlChars.NewLine
-
-                    For Each row As System.Windows.Forms.DataGridViewRow In Me.GrdResult.Rows
-                        If row.Index > 0 Then text &= ControlChars.NewLine & New String("-"c, 20)
-
-                        Dim resultRow = DirectCast(DirectCast(row.DataBoundItem, System.Data.DataRowView).Row, ResultSchema.GridResultRow)
-
-                        text &= row.Cells(Me.colResultEmail.Index).Value.ToString
-                        If Not resultRow.DataLeakFound Then
-                            text &= ControlChars.NewLine & "No data leaks found!"
-                        ElseIf Not resultRow.IsHaveIBeenPwnedNull Then
-                            text &= ControlChars.NewLine & Me.colResultHaveIBeenPwned.HeaderText & ": " & row.Cells(Me.colResultHaveIBeenPwned.Index).FormattedValue.ToString()
-                        ElseIf Not resultRow.IsHackedEmailsNull Then
-                            text &= ControlChars.NewLine & Me.colResultHackedEmails.HeaderText & ": " & row.Cells(Me.colResultHackedEmails.Index).FormattedValue.ToString()
-
-                        End If
-
-                    Next
-                    System.IO.File.WriteAllText(Me.SfdGridResult.FileName, text)
-                End If
+        If Me.SfdGridResult.ShowDialog(Me) = DialogResult.OK Then
+            If System.IO.Path.GetExtension(Me.SfdGridResult.FileName).ToLower() = ".txt" Then
+                Me.ExportGridResultsToTextFile(Me.SfdGridResult.FileName)
             End If
-        Catch ex As Exception
-            UtilMsgBox.ShowErrorException("Error during export Grid result to file", ex, False)
-        End Try
+        End If
     End Sub
+
+    Private Sub ExportGridResultsToTextFile(file As String)
+        Dim text = Me.Text & " [" & Now.ToLongDateString & " " & Now.ToLongTimeString & "]" & ControlChars.NewLine
+
+        text &= ControlChars.NewLine
+
+        For Each row As System.Windows.Forms.DataGridViewRow In Me.GrdResult.Rows
+            If row.Index > 0 Then text &= ControlChars.NewLine & New String("-"c, 20)
+
+            Dim resultRow = DirectCast(DirectCast(row.DataBoundItem, System.Data.DataRowView).Row, ResultSchema.GridResultRow)
+
+            text &= ControlChars.NewLine & row.Cells(Me.colResultEmail.Index).Value.ToString
+            If Not resultRow.DataLeakFound Then
+                text &= ControlChars.NewLine & "No data leaks found!"
+            Else
+                If Not resultRow.IsHaveIBeenPwnedNull Then
+                    text &= ControlChars.NewLine & Me.colResultHaveIBeenPwned.HeaderText & ": " & row.Cells(Me.colResultHaveIBeenPwned.Index).FormattedValue.ToString()
+                End If
+
+                If Not resultRow.IsHackedEmailsNull Then
+                    text &= ControlChars.NewLine & Me.colResultHackedEmails.HeaderText & ": " & row.Cells(Me.colResultHackedEmails.Index).FormattedValue.ToString()
+                End If
+
+                text &= ControlChars.NewLine & Me.colResultLastDataLeakDate.HeaderText & ": " & row.Cells(Me.colResultLastDataLeakDate.Index).FormattedValue.ToString()
+                text &= " - "
+                text &= Me.colResultLastDataLeakPublicationDate.HeaderText & ": " & row.Cells(Me.colResultLastDataLeakPublicationDate.Index).FormattedValue.ToString()
+            End If
+        Next
+
+        System.IO.File.WriteAllText(Me.SfdGridResult.FileName, text)
+    End Sub
+
+#End Region
+
 
 End Class

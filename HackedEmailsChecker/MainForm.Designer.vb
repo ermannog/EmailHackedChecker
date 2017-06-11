@@ -23,9 +23,9 @@ Partial Class MainForm
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.RbtCheckSingleEmail = New System.Windows.Forms.RadioButton()
         Me.TxtEmail = New System.Windows.Forms.TextBox()
         Me.MnuMain = New System.Windows.Forms.MenuStrip()
@@ -87,6 +87,8 @@ Partial Class MainForm
         Me.OfdEmailList = New System.Windows.Forms.OpenFileDialog()
         Me.DataGridViewImageColumn2 = New System.Windows.Forms.DataGridViewImageColumn()
         Me.SfdGridResult = New System.Windows.Forms.SaveFileDialog()
+        Me.MniFileExportGridResultsToFile = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.MnuMain.SuspendLayout()
         Me.TlsMain.SuspendLayout()
         Me.StsMain.SuspendLayout()
@@ -143,15 +145,17 @@ Partial Class MainForm
         '
         'MniFile
         '
-        Me.MniFile.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MniFileExit})
+        Me.MniFile.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MniFileExportGridResultsToFile, Me.ToolStripSeparator3, Me.MniFileExit})
         Me.MniFile.Name = "MniFile"
         Me.MniFile.Size = New System.Drawing.Size(37, 20)
         Me.MniFile.Text = "&File"
         '
         'MniFileExit
         '
+        Me.MniFileExit.Image = CType(resources.GetObject("MniFileExit.Image"), System.Drawing.Image)
+        Me.MniFileExit.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.MniFileExit.Name = "MniFileExit"
-        Me.MniFileExit.Size = New System.Drawing.Size(92, 22)
+        Me.MniFileExit.Size = New System.Drawing.Size(214, 26)
         Me.MniFileExit.Text = "E&xit"
         '
         'MniEdit
@@ -403,8 +407,8 @@ Partial Class MainForm
         '
         Me.colResultLastDataLeakDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
         Me.colResultLastDataLeakDate.DataPropertyName = "LastDataLeakDate"
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.colResultLastDataLeakDate.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.colResultLastDataLeakDate.DefaultCellStyle = DataGridViewCellStyle1
         Me.colResultLastDataLeakDate.HeaderText = "Last data leak"
         Me.colResultLastDataLeakDate.Name = "colResultLastDataLeakDate"
         Me.colResultLastDataLeakDate.ReadOnly = True
@@ -415,8 +419,8 @@ Partial Class MainForm
         '
         Me.colResultLastDataLeakPublicationDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
         Me.colResultLastDataLeakPublicationDate.DataPropertyName = "LastDataLeakPublicationDate"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.colResultLastDataLeakPublicationDate.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.colResultLastDataLeakPublicationDate.DefaultCellStyle = DataGridViewCellStyle2
         Me.colResultLastDataLeakPublicationDate.HeaderText = "Last data leak publication"
         Me.colResultLastDataLeakPublicationDate.Name = "colResultLastDataLeakPublicationDate"
         Me.colResultLastDataLeakPublicationDate.ReadOnly = True
@@ -715,6 +719,20 @@ Partial Class MainForm
         Me.SfdGridResult.Filter = "Text file|*.txt"
         Me.SfdGridResult.Title = "Save grid results to file"
         '
+        'MniFileExportGridResultsToFile
+        '
+        Me.MniFileExportGridResultsToFile.Enabled = False
+        Me.MniFileExportGridResultsToFile.Image = CType(resources.GetObject("MniFileExportGridResultsToFile.Image"), System.Drawing.Image)
+        Me.MniFileExportGridResultsToFile.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.MniFileExportGridResultsToFile.Name = "MniFileExportGridResultsToFile"
+        Me.MniFileExportGridResultsToFile.Size = New System.Drawing.Size(214, 26)
+        Me.MniFileExportGridResultsToFile.Text = "Export grid results to file..."
+        '
+        'ToolStripSeparator3
+        '
+        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(211, 6)
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -824,4 +842,6 @@ Partial Class MainForm
     Friend WithEvents prbStatus As ToolStripProgressBar
     Friend WithEvents BtnExportGridResultsToFile As ToolStripButton
     Friend WithEvents SfdGridResult As SaveFileDialog
+    Friend WithEvents MniFileExportGridResultsToFile As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
 End Class

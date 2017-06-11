@@ -34,11 +34,17 @@
     Public Const DatabaseRequestDelayDefaulValue As UInt64 = 2000
     Public Property DatabaseRequestDelay As UInt64 = Query.DatabaseRequestDelayDefaulValue
 
-    Public DatabaseLastRequest As New System.Collections.Generic.Dictionary(Of Util.Databases, DateTime)
+    Private DatabaseLastRequest As New System.Collections.Generic.Dictionary(Of Util.Databases, DateTime)
+
+
+    Public ReadOnly Property EmailsInDataLeakCount As Int64
+        Get
+            Return (From r In Me.Results Where r.DataLeakFound = True Select r.Email).Distinct().Count()
+        End Get
+    End Property
 
 #Region "Method Execute"
     Delegate Function QueryExecute(ByVal email As String) As QueryResult
-
 
     Public Overloads Sub Execute(email As String)
         Dim emails As New List(Of String)
@@ -129,7 +135,7 @@
                 End If
 
                 'Raise Results Events
-                If result.Found Then
+                If result.DataLeakFound Then
                     Me.AddOutputResultEmailFoundAdded(String.Format("found {0} data leaks", result.Items.Count), result)
                 Else
                     Me.AddOutputResultEmailNotFound("Not found", result)
